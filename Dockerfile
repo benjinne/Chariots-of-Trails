@@ -15,7 +15,7 @@ RUN apk add --update nodejs nodejs-npm
 WORKDIR /app
 COPY --from=builder /app .
 ENV ASPNETCORE_URLS=http://+:80
-
+ 
 # Run the application. REPLACE the name of dll with the name of the dll produced by your application
 EXPOSE 80
 ENTRYPOINT ["dotnet", "Chariots-of-Trails.dll"]
