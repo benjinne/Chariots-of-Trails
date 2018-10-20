@@ -6,8 +6,8 @@ import Login from 'components/login'
 import Strava from 'components/strava'
 
 export const routes = [
-  { name: 'login', path: '/', component: Login, display: 'Login', icon: 'list' },
   { name: 'home', path: '/', component: HomePage, display: 'Home', icon: 'home' },
+  { name: 'login', path: '/login', component: Login, display: 'Login', icon: 'user' },
   { name: 'upcoming', path: '/upcoming', component: Upcoming, display: 'Upcoming Trails', icon: 'map-signs' },
   { name: 'strava', path: '/strava', component: Strava, display: 'Strava', icon: 'list' }
 ]

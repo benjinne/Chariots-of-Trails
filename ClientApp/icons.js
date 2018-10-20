@@ -13,6 +13,7 @@ fontawesome.library.add(
   require('@fortawesome/fontawesome-free-solid/faSpinner'),
   require('@fortawesome/fontawesome-free-solid/faMapSigns'),
   require('@fortawesome/fontawesome-free-solid/faFire'),
+  require('@fortawesome/fontawesome-free-solid/faUser'),
   // Brands
   require('@fortawesome/fontawesome-free-brands/faFontAwesome'),
   require('@fortawesome/fontawesome-free-brands/faMicrosoft'),
