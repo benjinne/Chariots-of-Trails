@@ -25,6 +25,8 @@ namespace Chariots_of_Trails
 
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<Providers.IWeatherProvider, Providers.WeatherProviderFake>();
+            
+            services.AddSingleton<Providers.IStravaProvider, Providers.StravaProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
