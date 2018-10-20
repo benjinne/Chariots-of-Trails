@@ -1,0 +1,52 @@
+<template>
+    <div>
+        <h1>Strava Test</h1>
+
+        <div v-if="!user" class="text-center">
+            <p><em>Loading...</em></p>
+            <h1><icon icon="spinner" pulse/></h1>            
+        </div>
+
+        <template v-if="user">
+            <h1>{{ user }}</h1>
+        </template>
+    </div>
+</template>
+
+<script>
+export default {
+
+  data () {
+    return {
+        user: null
+    }
+  },
+
+  methods: {
+    async loadPage () {
+      // ES2017 async/await syntax via babel-plugin-transform-async-to-generator
+      // TypeScript can also transpile async/await down to ES5
+      //this.currentPage = page
+
+      try {
+
+        let response = await this.$http.get(`/api/strava/users`)
+        console.log(response.data.thing)
+        this.user = response.data.thing
+
+      } catch (err) {
+        window.alert(err)
+        console.log(err)
+      }
+     
+    }
+  },
+
+  async created () {
+    this.loadPage()
+  }
+}
+</script>
+
+<style>
+</style>
