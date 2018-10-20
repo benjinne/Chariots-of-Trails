@@ -61,4 +61,5 @@
             transform: rotate(360deg) scale(1);
         }
     }
+
 </style>

@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <nav-menu params="route: route"></nav-menu>
             </div>
-            <div class="col-sm-9">
+            <div style="width: 100%; margin-left: 25%; height: 100%;">
                 <router-view></router-view>
             </div>
         </div>
@@ -26,4 +26,5 @@
 </script>
 
 <style>
+.row { height: 100%;}
 </style>

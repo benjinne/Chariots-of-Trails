@@ -1,24 +1,24 @@
 ﻿<template>
-    <div>
                <div class="listWrap">
             <VirtualList class="list"
                 :size="50"
                 :remain="6"
                 :tobottom="toBottom"
             >
-                <div class="item" v-for="(day, index) of items" :index="index" :key="index">{{ day }}
+                <div class="item" v-for="(day, index) of items" :index="index" :key="index">
+                    <h2>{{ day }}</h2>
+                    <Carousel></Carousel>
                 </div>
             </VirtualList>
             <Loading class="list-loading" :loading="loading"></Loading>
         </div>
-
-    </div>
 </template>
 
 <script>
     import Loading from './loading.vue'
     import VirtualList from 'vue-virtual-scroll-list'
 import moment from 'moment';
+import Carousel from './carousel.vue'
 
 const getList = (length,times) => {
     var arr = new Array(length);
@@ -29,7 +29,7 @@ const getList = (length,times) => {
     }
 
 export default {
-  components: {  VirtualList, Loading },
+  components: {  VirtualList, Loading, Carousel},
 
   data () {
     return {
@@ -66,6 +66,7 @@ export default {
     }
     .listWrap {
         position: relative;
+        height: 100%;
     }
     .list-loading {
         position: absolute;
@@ -79,6 +80,7 @@ export default {
         border: 1px solid #ddd;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
+        height: 100% !important;
     }
     .source {
         text-align: center;
@@ -99,9 +101,10 @@ export default {
     }
 
         .item {
-        height: 50px;
         line-height: 50px;
         padding-left: 20px;
         border-bottom: 1px solid #eee;
+        display: block;
     }
+
 </style>
