@@ -31,13 +31,13 @@ data() {
       windowSize: 3,
       paginationFactor: 220,
       items: [
-        {name: 'Route 1', vote: 1, id:0 },
-        {name: 'Route 2', vote: 0, id:1 },
-        {name: 'Route 3', vote: 3, id:2 },
-        {name: 'Route 4', vote: 7, id:3 },
-        {name: 'Route 5', vote: 2, id:4 },
-        {name: 'Route 6', vote: 1, id:5 },
-        {name: 'Route 7', vote: 0, id:6 },
+        {name: 'Route A', vote: 1, id:0 },
+        {name: 'Route B', vote: 0, id:1 },
+        {name: 'Route C', vote: 3, id:2 },
+        {name: 'Route D', vote: 7, id:3 },
+        {name: 'Route E', vote: 2, id:4 },
+        {name: 'Route F', vote: 1, id:5 },
+        {name: 'Route G', vote: 0, id:6 },
       ],
       disableVote: false
     }
