@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>WELCOME!</h1>
+        <h1>Welcome to Chariots of Trails!</h1>
         
     </div>
 </template>
