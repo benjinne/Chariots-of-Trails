@@ -81,7 +81,6 @@ export default {
         -webkit-overflow-scrolling: touch;
         -overflow-scrolling: touch;
         height: 100% !important;
-        overflow-y: hidden;
     }
     .source {
         text-align: center;

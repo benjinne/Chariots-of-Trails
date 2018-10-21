@@ -6,10 +6,11 @@
     <div class="card-carousel">
       <div class="card-carousel--overflow-container">
         <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-          <div class="card-carousel--card" v-for="item in items" :key="item"><img src="https://placehold.it/200x200"/>
+          <div class="card-carousel--card" v-for="item in items" :key="item"><img src="../../images/Route_screen1.png"/>
             <div class="card-carousel--card--footer">
               <p>{{ item.name }}</p>
-              <p>{{ item.tag }}</p>
+              <button style="float:right" @click="incrementVote(item.id)" :disabled="disableVote">+1</button>
+              <p style="float:right">{{ item.vote }}</p>
             </div>
           </div>
         </div>
@@ -30,14 +31,15 @@ data() {
       windowSize: 3,
       paginationFactor: 220,
       items: [
-        {name: 'Tycoon Thai', tag: "Thai"},
-        {name: 'Ippudo', tag: "Japanese"},
-        {name: 'Milano', tag: "Pizza"},
-        {name: 'Tsing Tao', tag: "Chinese"},
-        {name: 'Frances', tag: "French"},
-        {name: 'Burma Superstar', tag: "Burmese"},
-        {name: 'Salt and Straw', tag: "Ice cream"},
-      ]
+        {name: 'Route 1', vote: 1, id:0 },
+        {name: 'Route 2', vote: 0, id:1 },
+        {name: 'Route 3', vote: 3, id:2 },
+        {name: 'Route 4', vote: 7, id:3 },
+        {name: 'Route 5', vote: 2, id:4 },
+        {name: 'Route 6', vote: 1, id:5 },
+        {name: 'Route 7', vote: 0, id:6 },
+      ],
+      disableVote: false
     }
   },
   computed: {
@@ -57,6 +59,10 @@ data() {
         this.currentOffset += this.paginationFactor;
       }
     },
+    incrementVote(index) {
+      this.items[index].vote++;
+      this.disableVote = true;
+    }
   }
 }
 </script>
@@ -160,7 +166,7 @@ data() {
   background: rgba(40, 44, 53, 0.06);
   display: inline-block;
   position: relative;
-  margin-left: 4px;
+  margin-right: 4px;
   color: #666a73;
 }
 .card-carousel-cards .card-carousel--card--footer p:nth-of-type(2):before {
@@ -168,23 +174,22 @@ data() {
   float: left;
   position: absolute;
   top: 0;
-  left: -12px;
+  right: -12px;
   width: 0;
   height: 0;
   border-color: transparent rgba(40, 44, 53, 0.06) transparent transparent;
-  border-style: solid;
   border-width: 12px 12px 12px 0;
+  
 }
 .card-carousel-cards .card-carousel--card--footer p:nth-of-type(2):after {
   content: "";
   position: absolute;
   top: 10px;
-  left: -1px;
   float: left;
   width: 4px;
   height: 4px;
   border-radius: 2px;
-  background: white;
   box-shadow: -0px -0px 0px #004977;
+  
 }
 </style>
