@@ -9,5 +9,6 @@ export const routes = [
   { name: 'home', path: '/', component: HomePage, display: 'Home', icon: 'home' },
   { name: 'login', path: '/login', component: Login, display: 'Login', icon: 'user' },
   { name: 'upcoming', path: '/upcoming', component: Upcoming, display: 'Upcoming Trails', icon: 'map-signs' },
-  { name: 'strava', path: '/strava', component: Strava, display: 'Strava', icon: 'list' }
+  { name: 'strava', path: '/strava', component: Strava, display: 'Strava', icon: 'list' },
+  { name: 'stravaCallback', path: '/strava/stravaCallback', component: Strava}
 ]
