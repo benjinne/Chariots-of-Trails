@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <nav-menu params="route: route"></nav-menu>
             </div>
-            <div class="col-sm-9">
+            <div class="mainView">
                 <router-view></router-view>
             </div>
         </div>
@@ -26,4 +26,15 @@
 </script>
 
 <style>
+.row { height: 100%;}
+@media (max-width: 767px) {
+        .mainView {margin-left: 0%;}
+}
+@media (min-width: 768px) {
+        .mainView {margin-left: 25%;}
+}
+.mainView {
+    width: 100%; height: 100%;
+}
+
 </style>

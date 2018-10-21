@@ -14,8 +14,8 @@ FROM microsoft/dotnet:2.1.1-aspnetcore-runtime-alpine3.7 as baseimage
 RUN apk add --update nodejs nodejs-npm
 WORKDIR /app
 COPY --from=builder /app .
-ENV ASPNETCORE_URLS=http://+:$port
-
+ENV ASPNETCORE_URLS=http://+:80
+ 
 # Run the application. REPLACE the name of dll with the name of the dll produced by your application
-EXPOSE $port
-CMD ["dotnet", "chariots_of_trails.dll"]
+EXPOSE 80
+ENTRYPOINT ["dotnet", "Chariots-of-Trails.dll"]
