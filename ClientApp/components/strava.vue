@@ -9,7 +9,7 @@
 
         <template v-if="user">
             <h1>{{ user }}</h1>
-            <!-- <img src="/images/profile-pictures/michael-scott.jpg"/> -->
+            <img style="width: 200px; height: 200px;" src="../../images/profile-pictures/michael-scott.png"/>
         </template>
     </div>
 </template>
