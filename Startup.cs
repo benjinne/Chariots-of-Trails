@@ -21,16 +21,15 @@ namespace Chariots_of_Trails
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<Providers.IWeatherProvider, Providers.WeatherProviderFake>();
-            
             services.AddSingleton<Providers.IStravaProvider, Providers.StravaProvider>();
 
             //initializes the cookie schema for the app
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
 
         }
 

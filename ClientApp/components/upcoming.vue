@@ -79,7 +79,7 @@ export default {
         border-radius: 3px;
         border: 1px solid #ddd;
         -webkit-overflow-scrolling: touch;
-        overflow-scrolling: touch;
+        -overflow-scrolling: touch;
         height: 100% !important;
     }
     .source {
