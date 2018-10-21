@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Strava Test</h1>
+        <h1>Profile page</h1>
 
         <div v-if="!user" class="text-center">
             <p><em>Loading...</em></p>
@@ -9,6 +9,7 @@
 
         <template v-if="user">
             <h1>{{ user }}</h1>
+            <!-- <img src="/images/profile-pictures/michael-scott.jpg"/> -->
         </template>
     </div>
 </template>
