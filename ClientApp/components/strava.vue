@@ -15,6 +15,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import Authservice from 'vue-authservice'
+import Config from '../protected-config/websiteConfig.js'
+
+Vue.use(Authservice, options)
+
 export default {
 
   data () {
