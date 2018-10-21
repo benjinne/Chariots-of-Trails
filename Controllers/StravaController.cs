@@ -4,6 +4,8 @@ using Chariots_of_Trails.Providers;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Chariots_of_Trails.Controllers
 {
@@ -45,9 +47,10 @@ namespace Chariots_of_Trails.Controllers
             var content = new FormUrlEncodedContent(toPost);
 
             var response = await client.PostAsync("https://www.strava.com/oauth/token", content);
-            var responseString = await response.Content.ReadAsStringAsync();
+            string responseString = await response.Content.ReadAsStringAsync();
 
-            
+            string access_token = responseString.Substring(122, 40);
+            string userID = responseString.Substring(180,8);
 
             return Redirect("/");
 
