@@ -24,13 +24,7 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public IActionResult Users()
         {
-            var test = stravaProvider.getUser();
-
-            var result = new
-            {
-                thing = test
-            };
-            return Ok(result);
+            return Ok(stravaProvider.getUser());
         }
 
         [HttpGet("[action]")]

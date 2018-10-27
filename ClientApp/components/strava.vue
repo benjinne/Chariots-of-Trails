@@ -15,11 +15,6 @@
 </template>
 
 <script>
-// import Vue from 'vue'
-// import Authservice from 'vue-authservice'
-// import Config from '../protected-config/websiteConfig.js'
-
-// Vue.use(Authservice, options)
 
 export default {
 
@@ -38,8 +33,8 @@ export default {
       try {
 
         let response = await this.$http.get(`/api/strava/users`)
-        console.log(response.data.thing)
-        this.user = response.data.thing
+        console.log(response.data)
+        this.user = response.data
 
       } catch (err) {
         window.alert(err)
