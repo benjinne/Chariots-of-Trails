@@ -20,15 +20,20 @@ namespace Chariots_of_Trails
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = System.TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+            });
+
             // Add framework services.
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<Providers.IStravaProvider, Providers.StravaProvider>();
-
-            //initializes the cookie schema for the app
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
 
         }
 
@@ -50,15 +55,14 @@ namespace Chariots_of_Trails
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //authentication middleware
-            app.UseAuthentication();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
+                      name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapSpaFallbackRoute(

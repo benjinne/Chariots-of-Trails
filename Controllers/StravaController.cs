@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Chariots_of_Trails.Controllers
 {
@@ -51,6 +52,9 @@ namespace Chariots_of_Trails.Controllers
 
             string access_token = responseString.Substring(122, 40);
             string userID = responseString.Substring(180,8);
+
+            HttpContext.Session.SetString("access_token", access_token);
+
 
             return Redirect("/");
 
