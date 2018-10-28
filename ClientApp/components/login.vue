@@ -21,20 +21,20 @@
 
 <script >
 
-import config from './config.json'
+import config from '../../config.json'
 
 export default {
 
 
   methods: {
     async loginInit () {
-      window.location = 
-      "https://www.strava.com/oauth/authorize?" +
-      "client_id=" + config.client_id +
-      "&redirect_uri=" + config.redirect_uri +
-      "&response_type=" + config.response_type +
-      "&approval_prompt=" + config.approval_prompt +
-      "&scope=" + config.scope
+        window.location = 
+        "https://www.strava.com/oauth/authorize?" +
+        "client_id=" + config.client_id +
+        "&redirect_uri=" + config.redirect_uri +
+        "&response_type=" + config.response_type +
+        "&approval_prompt=" + config.approval_prompt +
+        "&scope=" + config.scope
     }
   }
 }

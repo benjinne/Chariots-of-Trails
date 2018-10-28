@@ -24,7 +24,8 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public IActionResult Users()
         {
-            return Ok(stravaProvider.getUser());
+            return Ok(HttpContext.Session.GetString("access_token"));
+            //return Ok(stravaProvider.getUser());
         }
 
         [HttpGet("[action]")]
