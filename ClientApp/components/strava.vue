@@ -11,7 +11,7 @@
             <h1>{{ user }}</h1>
             <img style="width: 200px; height: 200px;" src="../../images/profile-pictures/michael-scott.png"/>
             <h1>Groups</h1>
-            <h4>YCP XC</h4>
+            <h4>YCPXC</h4>
         </template>
     </div>
 </template>
