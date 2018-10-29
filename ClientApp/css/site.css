@@ -11,7 +11,7 @@ html, body, #app {
 .nav-item a.active,
 .nav-item a.active:hover,
 .nav-item a.active:focus {
-    background-color: #4189C7;
+    background-color: #fc4c02;
     color: white;
     text-decoration: underline;
 }
