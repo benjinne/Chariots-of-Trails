@@ -35,8 +35,16 @@ namespace Chariots_of_Trails.Controllers
             StaticAuthentication auth = new StaticAuthentication(token);
             StravaClient client = new StravaClient(auth);
             //Receive the currently authorized athlete
-            Athlete athlete = await client.Athletes.GetAthleteAsync();
-            return Ok(athlete.FirstName);
+            try
+            {
+                Athlete athlete = await client.Athletes.GetAthleteAsync();
+                return Ok(athlete.FirstName);
+            }
+            catch
+            {
+                return Ok("Not signed in");
+            }
+            
 
             
             //return Ok(stravaProvider.getUser());
