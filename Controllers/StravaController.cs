@@ -22,9 +22,14 @@ namespace Chariots_of_Trails.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
         {
-            return Ok(HttpContext.Session.GetString("access_token"));
+
+
+            string token = HttpContext.Session.GetString("access_token");
+
+            var response = await client.GetAsync("https://www.strava.com/api/v3/athlete" + "?access_token=" + token);
+            return Ok(response);
             //return Ok(stravaProvider.getUser());
         }
 

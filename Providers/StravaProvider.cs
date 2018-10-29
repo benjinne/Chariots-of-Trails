@@ -5,6 +5,8 @@ using Chariots_of_Trails.Models;
 using Strava.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using LiteDB;
+using Microsoft.AspNetCore.Http;
+
 
 
 namespace Chariots_of_Trails.Providers
@@ -20,13 +22,12 @@ namespace Chariots_of_Trails.Providers
             _hostingEnvironment = hostingEnvironment;
 
             // initDB();
-
-            user = "Michael Scott";
         }
 
         public string getUser()
         {
-            return user;
+            //do a get with key
+            return "test";
         }
 
         public string getTrails() 
