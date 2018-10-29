@@ -8,6 +8,10 @@ using Newtonsoft.Json;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
+using Strava.Authentication;
+using Strava.Clients;
+using Strava.Athletes;
+
 namespace Chariots_of_Trails.Controllers
 {
     [Route("api/[controller]")]
@@ -24,12 +28,17 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> Users()
         {
-
+            
 
             string token = HttpContext.Session.GetString("access_token");
 
-            var response = await client.GetAsync("https://www.strava.com/api/v3/athlete" + "?access_token=" + token);
-            return Ok(response);
+            StaticAuthentication auth = new StaticAuthentication(token);
+            StravaClient client = new StravaClient(auth);
+            //Receive the currently authorized athlete
+            Athlete athlete = await client.Athletes.GetAthleteAsync();
+            return Ok(athlete.FirstName);
+
+            
             //return Ok(stravaProvider.getUser());
         }
 
