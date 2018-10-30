@@ -94,3 +94,9 @@ html, body, #app {
     font-size: 16px;
     cursor:pointer;
 }
+
+.strava-button-div {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); /* or try 50% */
+}

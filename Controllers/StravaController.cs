@@ -29,31 +29,25 @@ namespace Chariots_of_Trails.Controllers
         public async Task<IActionResult> Users()
         {
             
-
             string token = HttpContext.Session.GetString("access_token");
-
-            StaticAuthentication auth = new StaticAuthentication(token);
-            StravaClient client = new StravaClient(auth);
-            //Receive the currently authorized athlete
-            try
+            if(token == null)
             {
+                return Ok("session expired");
+            }
+            else
+            {
+                //need to handle token expired exception
+                StaticAuthentication auth = new StaticAuthentication(token);
+                StravaClient client = new StravaClient(auth);
                 Athlete athlete = await client.Athletes.GetAthleteAsync();
 
-                var data = new {
+                var data = new 
+                {
                     name = athlete.FirstName,
                     pic = athlete.Profile
                 };
-
                 return Ok(data);
             }
-            catch
-            {
-                return Ok("Not signed in");
-            }
-            
-
-            
-            //return Ok(stravaProvider.getUser());
         }
 
         [HttpGet("[action]")]

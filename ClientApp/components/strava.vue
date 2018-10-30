@@ -29,14 +29,9 @@ export default {
 
   methods: {
     async loadPage () {
-      // ES2017 async/await syntax via babel-plugin-transform-async-to-generator
-      // TypeScript can also transpile async/await down to ES5
-      //this.currentPage = page
-
       try {
 
         let response = await this.$http.get(`/api/strava/users`)
-        console.log(response.data)
         this.user = response.data.name
         this.pic = response.data.pic
 
@@ -44,7 +39,6 @@ export default {
         window.alert(err)
         console.log(err)
       }
-     
     }
   },
 

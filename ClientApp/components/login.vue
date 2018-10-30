@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div align="middle" class="strava-button-div">
         <a href="#" @click="loginInit()">
         <svg width="193px" height="48px" viewBox="0 0 193 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->

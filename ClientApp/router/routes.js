@@ -10,5 +10,6 @@ export const routes = [
   { name: 'login', path: '/login', component: Login, display: 'Login', icon: 'user' },
   { name: 'upcoming', path: '/upcoming', component: Upcoming, display: 'Upcoming Trails', icon: 'map-signs' },
   { name: 'Profile', path: '/strava', component: Strava, display: 'Profile', icon: 'list' },
-  { name: 'stravaCallback', path: '/strava/stravaCallback', component: Strava}
+  //{ name: 'stravaCallback', path: '/strava/stravaCallback', component: Strava},
+  { name: 'counter-example', path: '/counter-example', component: CounterExample, display: 'counter-example', icon: 'fire'}
 ]
