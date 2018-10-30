@@ -38,7 +38,13 @@ namespace Chariots_of_Trails.Controllers
             try
             {
                 Athlete athlete = await client.Athletes.GetAthleteAsync();
-                return Ok(athlete.FirstName);
+
+                var data = new {
+                    name = athlete.FirstName,
+                    pic = athlete.Profile
+                };
+
+                return Ok(data);
             }
             catch
             {

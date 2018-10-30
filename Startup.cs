@@ -25,7 +25,7 @@ namespace Chariots_of_Trails
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = System.TimeSpan.FromSeconds(10);
+                //options.IdleTimeout = System.TimeSpan.FromSeconds(10);
                 options.Cookie.HttpOnly = true;
             });
 
