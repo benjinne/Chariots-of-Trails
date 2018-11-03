@@ -9,45 +9,36 @@
 
         <template v-if="user">
             <h1>{{ user }}</h1>
-            <img style="width: 200px; height: 200px;" src="../../images/profile-pictures/michael-scott.png"/>
+            <img style="width: 200px; height: 200px;" v-bind:src="pic"/>
             <h1>Groups</h1>
-            <h4>YCP XC</h4>
+            <h4>YCPXC</h4>
         </template>
     </div>
 </template>
 
 <script>
-// import Vue from 'vue'
-// import Authservice from 'vue-authservice'
-// import Config from '../protected-config/websiteConfig.js'
-
-// Vue.use(Authservice, options)
 
 export default {
 
   data () {
     return {
-        user: null
+        user: null,
+        pic: null
     }
   },
 
   methods: {
     async loadPage () {
-      // ES2017 async/await syntax via babel-plugin-transform-async-to-generator
-      // TypeScript can also transpile async/await down to ES5
-      //this.currentPage = page
-
       try {
 
         let response = await this.$http.get(`/api/strava/users`)
-        console.log(response.data.thing)
-        this.user = response.data.thing
+        this.user = response.data.name
+        this.pic = response.data.pic
 
       } catch (err) {
         window.alert(err)
         console.log(err)
       }
-     
     }
   },
 

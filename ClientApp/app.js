@@ -19,6 +19,36 @@ const app = new Vue({
   ...App
 })
 
+//check for login on each router action
+router.beforeEach(async (to, from, next) => {
+  if(to.path != '/login'){
+    if(await sessionExistsTest()){
+      next()
+    }else{
+      next('login')
+    }
+  }else{
+    next()
+  }
+})
+
+//test to see if logged in
+async function sessionExistsTest(){
+  let test = await app.$http.get(`/api/strava/sessionTest`)
+  return test.data
+}
+
+//check for login on each refresh
+sessionExistsTest()
+  .then(check => {
+    if(!check){
+      router.push('login')
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
 export {
   app,
   router,
