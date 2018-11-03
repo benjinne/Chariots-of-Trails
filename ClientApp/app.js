@@ -16,53 +16,38 @@ sync(store, router)
 const app = new Vue({
   store,
   router,
-  ...App//,
-  //watch: {
-    //'$route': function(from, to) {
-      //called on page change
-    //  sessionTest()
-    //}
-  //}
+  ...App
 })
 
-
-router.beforeEach((to, from, next) => {
-
-    if(sessionExistsTest()){
+//check for login on each router action
+router.beforeEach(async (to, from, next) => {
+  if(to.path != '/login'){
+    if(await sessionExistsTest()){
       next()
     }else{
-
-      
       next('login')
     }
-  
-  //router.push('login')
-  // if(await sessionExistsTest())
-  // {
-  //   console.log('1')
-  //   next()
-  // }else{
-  //   console.log('2')
-  //   next('/login')
-  // }
-  
-
+  }else{
+    next()
+  }
 })
 
-
+//test to see if logged in
 async function sessionExistsTest(){
-  //test to see if logged in
-  let response = await app.$http.get(`/api/strava/users`)
-  if(response.data == 'session expired'){
-    return false
-    //router.push('login')
-  }
-  return true
+  let test = await app.$http.get(`/api/strava/sessionTest`)
+  return test.data
 }
 
-router.push('login')
-//called on page refresh
-//sessionTest()
+//check for login on each refresh
+sessionExistsTest()
+  .then(check => {
+    if(!check){
+      router.push('login')
+    }
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
 export {
   app,

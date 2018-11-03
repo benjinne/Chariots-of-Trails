@@ -25,33 +25,32 @@ namespace Chariots_of_Trails.Controllers
             this.stravaProvider = stravaProvider;
         }
 
+        //test for token, returns true if token exists
         [HttpGet("[action]")]
-        public async Task<IActionResult> Users()
+        public IActionResult sessionTest()
         {
-            
-            string token = HttpContext.Session.GetString("access_token");
-            if(token == null)
-            {
-                return Ok("session expired");
-            }
-            else
-            {
-                //need to handle token expired exception
-                StaticAuthentication auth = new StaticAuthentication(token);
-                StravaClient client = new StravaClient(auth);
-                Athlete athlete = await client.Athletes.GetAthleteAsync();
-
-                var data = new 
-                {
-                    name = athlete.FirstName,
-                    pic = athlete.Profile
-                };
-                return Ok(data);
-            }
+            return Ok(HttpContext.Session.GetString("access_token") != null);
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> StravaCallback([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
+        public async Task<IActionResult> users()
+        {
+            //todo handle token expired exception
+            string token = HttpContext.Session.GetString("access_token");
+            StaticAuthentication auth = new StaticAuthentication(token);
+            StravaClient client = new StravaClient(auth);
+            Athlete athlete = await client.Athletes.GetAthleteAsync();
+
+            var data = new 
+            {
+                name = athlete.FirstName,
+                pic = athlete.Profile
+            };
+            return Ok(data);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> stravaCallback([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
 
             var toPost = new Dictionary<string, string>
