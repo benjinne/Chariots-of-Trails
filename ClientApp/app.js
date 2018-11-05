@@ -13,6 +13,9 @@ Vue.prototype.$http = axios
 
 sync(store, router)
 
+//Adds ability to use <script> tags in vue components
+Vue.use(require('vue-script2'))
+
 const app = new Vue({
   store,
   router,

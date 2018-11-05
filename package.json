@@ -28,7 +28,8 @@
     "vue-template-compiler": "^2.5.16",
     "vue-virtual-scroll-list": "^1.2.8",
     "vuex": "^2.5.0",
-    "vuex-router-sync": "^4.3.2"
+    "vuex-router-sync": "^4.3.2",
+    "vue-script2": "2.0.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome": "^1.1.4",

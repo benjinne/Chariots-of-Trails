@@ -52,7 +52,7 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> stravaCallback([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
-
+            //todo use config file instead of hardcoded values
             var toPost = new Dictionary<string, string>
             {
                { "client_id", "25050" },
