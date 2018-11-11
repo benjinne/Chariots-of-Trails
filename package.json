@@ -29,7 +29,9 @@
     "vue-virtual-scroll-list": "^1.2.8",
     "vuex": "^2.5.0",
     "vuex-router-sync": "^4.3.2",
-    "vue-script2": "2.0.3"
+    "vue-script2": "2.0.3",
+    "vue2-leaflet": "1.2.1",
+    "google-polyline": "1.0.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
