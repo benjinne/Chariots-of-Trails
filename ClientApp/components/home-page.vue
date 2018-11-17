@@ -15,7 +15,6 @@
         <div>
         <l-map ref="map" style="height:500px; width:500px">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-polyline :lat-lngs="points" lineJoin="round"/>
         </l-map>
         </div>
 
@@ -39,7 +38,7 @@ data() {
         map: null,
         url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
         attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        points: [{ lng: -1.219482, lat: 47.413220 }]
+        points: null
     }
 },
 
@@ -48,6 +47,14 @@ mounted() {
         var polyline = require( 'google-polyline' )
         this.map = this.$refs.map.mapObject
         this.points = polyline.decode( 'w|xrF`kjsMq@gE{p@b\\zLj^{AdCxDfQaY|LxI`c@lE`qAvBtUbHxZgJrp@~Stj@vGbXsAb\\zIzoA|CdaBiH`BuRvNeLiA}WpOqJq[|G_T{Ewd@{Acc@cEgTd@sRwBsUnBgV_DpA~CqAG_BoLgm@e@ed@uE{RfS_YjEcNcGmLaAeHyD}{AjY}mAuYeuAr^iD|P`D~JxFfZp`@lg@~iA|A~BjCiCA_DsD{C~AeICuUcBeLaXyt@gK`FrBrLgBxBn@S' )
+        
+        L.polyline(this.points, {
+		color: 'blue',
+		weight: 5,
+		opacity: .7,
+		lineJoin: 'round'
+	    }).addTo(this.map);
+        
         this.map.fitBounds(this.points);
         //console.log(this.points)
     })
