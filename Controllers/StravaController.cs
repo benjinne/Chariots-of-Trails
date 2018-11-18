@@ -50,6 +50,7 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> stravaCallback([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
+            //save expires_at time and refresh token because user will get access_denied after 6 hours if they haven't re-logged in.
             using (StreamReader r = new StreamReader("config.json"))
             {
                 string json = r.ReadToEnd();
