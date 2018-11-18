@@ -1,7 +1,0 @@
-{
-    "client_id":25050,
-    "redirect_uri":"http://localhost:5050/api/strava/stravaCallback",
-    "response_type":"code",
-    "approval_prompt":"auto",
-    "scope":"read"
-}

@@ -5,6 +5,7 @@ import store from './store'
 import { sync } from 'vuex-router-sync'
 import App from 'components/app-root'
 import { FontAwesomeIcon } from './icons'
+//import "leaflet/dist/leaflet.css";
 
 // Registration of global components
 Vue.component('icon', FontAwesomeIcon)
@@ -12,6 +13,9 @@ Vue.component('icon', FontAwesomeIcon)
 Vue.prototype.$http = axios
 
 sync(store, router)
+
+//Adds ability to use <script> tags in vue components
+Vue.use(require('vue-script2'))
 
 const app = new Vue({
   store,
