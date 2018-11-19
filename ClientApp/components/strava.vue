@@ -7,12 +7,10 @@
             <h1><icon icon="spinner" pulse/></h1>            
         </div>
 
-        <template v-if="user">
+        <div v-if="user">
             <h1>{{ user }}</h1>
             <img style="width: 200px; height: 200px;" v-bind:src="pic"/>
-            <h1>Groups</h1>
-            <h4>YCPXC</h4>
-        </template>
+        </div>
     </div>
 </template>
 
