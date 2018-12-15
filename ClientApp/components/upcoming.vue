@@ -1,8 +1,8 @@
 ﻿<template>
     <div class="listWrap">
         <VirtualList class="list"
-            :size="50"
-            :remain="6"
+            :size="431"
+            :remain="3"
             :tobottom="toBottom">
             <div class="item" v-for="(day, index) of items" :index="index" :key="index">
                 <h2>{{ day }}</h2>
@@ -57,6 +57,9 @@ export default {
 </script>
 
 <style>
+    div#app {
+        overflow: hidden;
+    }
     .counter {
         position: relative;
         padding-bottom: 20px;
