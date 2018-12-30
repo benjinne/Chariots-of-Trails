@@ -1,11 +1,11 @@
 ﻿<template>
-    <div class="listWrap">
+    <div>
         <!-- <VirtualList class="list" :size="360" :remain="2.5" :bench="8">
             <div class="item" v-for="(day, index) of items" :index="index" :key="index"> -->
-                <h2>{{ day }}</h2>
-                <carousel :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [700, 2], [1100, 3], [1500, 4]]">
+                <!-- <h2>{{ day }}</h2> -->
+                <carousel :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [830, 2], [1130, 3], [1430, 4], [1730, 5]]">
                     <slide v-for="n in numberOfMaps" :key="n.id">
-                        <l-map ref="map" style="height:250px; width:250px" @leaflet:load="insertPolyline">
+                        <l-map class="map" ref="map" style="height:250px; width:250px" @leaflet:load="insertPolyline">
                             <l-tile-layer :url="url" :attribution="attribution"/>
                         </l-map>
                     </slide>
@@ -50,7 +50,12 @@ export default {
     },
 
     mounted() {
+        document.getElementsByClassName("main-view")[0].className = 'upcoming-main-view'
         this.numberOfMaps = 6
+    },
+
+    destroyed() {
+        document.getElementsByClassName("upcoming-main-view")[0].className = 'main-view'
     },
 
     methods: {
@@ -86,14 +91,10 @@ export default {
 <style>
     @import "~leaflet/dist/leaflet.css";
 
-    .listWrap {
-        height: 100%;
+    .map {
+        margin: auto;
     }
 
-    .col-sm-9 {
-        padding-right: 50px;
-        padding-left: 50px;
-    }
     /* div#app {
         overflow: hidden;
     } */

@@ -37,10 +37,11 @@
       methods: {
           toggleCollapsed: function (event) {
             this.collapsed = !this.collapsed
+            // used for mobile when clicking menu button, this shifts the main-view down
             if(this.collapsed){
-                document.getElementById("main").style.paddingTop = "59px"
+                document.getElementsByClassName("main-view")[0].style.paddingTop = ""
             }else{
-                document.getElementById("main").style.paddingTop = "179px"
+                document.getElementsByClassName("main-view")[0].style.paddingTop = "179px"
             }
         }
       }
