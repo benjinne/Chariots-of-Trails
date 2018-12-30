@@ -48,6 +48,27 @@ namespace Chariots_of_Trails.Controllers
         }
 
         [HttpGet("[action]")]
+        public async Task<IActionResult> routes()
+        {
+            //todo handle token expired exception
+            string token = HttpContext.Session.GetString("access_token");
+            StaticAuthentication auth = new StaticAuthentication(token);
+            StravaClient client = new StravaClient(auth);
+            
+            Athlete athlete = await client.Athletes.GetAthleteAsync();
+            List<Strava.Routes.Route> routes = client.Routes.GetRoutes(athlete.Id);
+
+            System.Collections.ArrayList polylines = new System.Collections.ArrayList();
+            foreach(Strava.Routes.Route _route in routes){
+                polylines.Add(new {
+                    name = _route.Name,
+                    route = _route.Map.SummaryPolyline
+                });
+            }
+            return Ok(polylines);
+        }
+
+        [HttpGet("[action]")]
         public async Task<IActionResult> stravaCallback([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
             //save expires_at time and refresh token because user will get access_denied after 6 hours if they haven't re-logged in.

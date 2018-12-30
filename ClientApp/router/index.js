@@ -9,7 +9,6 @@ let router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  console.log('checking if logged in')
   if(to.path != '/login'){
     if(await sessionExistsTest()){
       next()

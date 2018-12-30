@@ -1,14 +1,17 @@
 ﻿<template>
     <div class="listWrap">
-        <VirtualList class="list"
-            :size="431"
-            :remain="3"
-            :tobottom="toBottom">
-            <div class="item" v-for="(day, index) of items" :index="index" :key="index">
+        <!-- <VirtualList class="list" :size="360" :remain="2.5" :bench="8">
+            <div class="item" v-for="(day, index) of items" :index="index" :key="index"> -->
                 <h2>{{ day }}</h2>
-                <Carousel></Carousel>
-            </div>
-        </VirtualList>
+                <carousel :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [700, 2], [1100, 3], [1500, 4]]">
+                    <slide v-for="n in numberOfMaps" :key="n.id">
+                        <l-map ref="map" style="height:250px; width:250px" @leaflet:load="insertPolyline">
+                            <l-tile-layer :url="url" :attribution="attribution"/>
+                        </l-map>
+                    </slide>
+                </carousel>
+            <!-- </div>
+        </VirtualList> -->
         <Loading class="list-loading" :loading="loading"></Loading>
     </div>
 </template>
@@ -17,7 +20,9 @@
 import Loading from './loading.vue'
 import VirtualList from 'vue-virtual-scroll-list'
 import moment from 'moment';
-import Carousel from './carousel.vue'
+// import Carousel from './carousel.vue'
+import { Carousel, Slide } from 'vue-carousel';
+import { LMap, LPolyline, LTileLayer} from 'vue2-leaflet';
 
 const getList = (length,times) => {
     var arr = new Array(length);
@@ -29,14 +34,23 @@ const getList = (length,times) => {
 
 export default {
 
-    components: {  VirtualList, Loading, Carousel},
+    components: {  VirtualList, Loading, Carousel, Slide, LMap, LPolyline, LTileLayer},
 
     data () {
         return {
             loading: false,
             times:0,
-            items: getList(20, 0)
+            items: getList(20, 0),
+            mapsLoaded: false,
+            url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+            numberOfMaps: 0,
+            mapIndex: 0
         }
+    },
+
+    mounted() {
+        this.numberOfMaps = 6
     },
 
     methods: {
@@ -50,6 +64,19 @@ export default {
                     this.items = this.items.concat(getList(20,this.times))
                 }, 2017)
             }
+        },
+
+        insertPolyline: function() {
+            var map = this.$refs.map[this.mapIndex++].mapObject
+            var polyline = require( 'google-polyline' )
+            var points = polyline.decode( 'w|xrF`kjsMq@gE{p@b\\zLj^{AdCxDfQaY|LxI`c@lE`qAvBtUbHxZgJrp@~Stj@vGbXsAb\\zIzoA|CdaBiH`BuRvNeLiA}WpOqJq[|G_T{Ewd@{Acc@cEgTd@sRwBsUnBgV_DpA~CqAG_BoLgm@e@ed@uE{RfS_YjEcNcGmLaAeHyD}{AjY}mAuYeuAr^iD|P`D~JxFfZp`@lg@~iA|A~BjCiCA_DsD{C~AeICuUcBeLaXyt@gK`FrBrLgBxBn@S' )
+            L.polyline(points, {
+            color: 'blue',
+            weight: 5,
+            opacity: .7,
+            lineJoin: 'round'
+            }).addTo(map);
+            map.fitBounds(points);
         }
     }
 
@@ -57,10 +84,21 @@ export default {
 </script>
 
 <style>
-    div#app {
-        overflow: hidden;
+    @import "~leaflet/dist/leaflet.css";
+
+    .listWrap {
+        height: 100%;
     }
-    .counter {
+
+    .col-sm-9 {
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+    /* div#app {
+        overflow: hidden;
+    } */
+
+    /* .counter {
         position: relative;
         padding-bottom: 20px;
     }
@@ -108,6 +146,6 @@ export default {
         padding-left: 20px;
         border-bottom: 1px solid #eee;
         display: block;
-    }
+    } */
     
 </style>

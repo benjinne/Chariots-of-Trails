@@ -1,6 +1,6 @@
 ﻿<template>
-    <div class="main-nav">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div style="height: inherit;">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" @click="toggleCollapsed">
                 <span class="navbar-toggler-icon"></span>
                 <span class="icon-bar"></span>
@@ -35,8 +35,13 @@
         }
       },
       methods: {
-        toggleCollapsed: function (event) {
-          this.collapsed = !this.collapsed
+          toggleCollapsed: function (event) {
+            this.collapsed = !this.collapsed
+            if(this.collapsed){
+                document.getElementById("main").style.paddingTop = "59px"
+            }else{
+                document.getElementById("main").style.paddingTop = "179px"
+            }
         }
       }
     }
