@@ -1,10 +1,19 @@
-html, body, #app {
+html{
     height: 100%;
 }
 
-/* This file should be reviewed. It's not optimal, but it works for now. */
+body, #app{
+    height: inherit;
+}
+
+.container-fluid {
+    /* removes bootstrap padding */
+    padding: 0px;
+}
+
 .navbar {
     display: list-item;
+    height: inherit;
 }
 
 /* Highlighting rules for nav menu items */
@@ -22,34 +31,42 @@ html, body, #app {
     color: white;
 }
 
-/* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
+    width: 100%;
+    /* keeps navbar ontop of leaflet maps */
+    z-index: 1001;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
 }
 
-@media (max-width: 767px) {
-    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-    body {
-        padding-top: 50px;
+.main-view {
+    margin: auto;
+}
+
+/* mobile */
+@media (max-width: 575px) {
+    .main-view{
+        padding-top: 59px;
     }
 }
 
-@media (min-width: 768px) {
+/* desktop */
+@media (min-width: 576px) {
+
+    #app {
+        display: flex;
+    }
+
     /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-nav {
-        height: 100%;
-        width: calc(25% - 20px);
-    }    
-    .main-nav .navbar {
-        border-radius: 0px;
-        border-width: 0px;
-        height: 100%;
+    .main-view{
+        padding-left: 215px;
+        padding-top: 0px !important;
     }
-    .navbar-expand-md .navbar-nav {
+
+    .main-nav {
+        height: inherit;
+        width: 215px;
+    }
+    .navbar-expand-sm .navbar-nav {
         flex-direction: column;
     }
     .navbar-header {

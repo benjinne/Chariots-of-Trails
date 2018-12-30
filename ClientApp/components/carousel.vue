@@ -1,12 +1,10 @@
-
-
 <template id="v-carousel">
   <div class="card-carousel-wrapper">
     <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
     <div class="card-carousel">
       <div class="card-carousel--overflow-container">
         <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-          <div class="card-carousel--card" v-for="item in items" :key="item"><img src="../../images/Route_screen1.png"/>
+          <div class="card-carousel--card" v-for="item in items" :key="item.id"><img src="../../images/Route_screen1.png"/>
             <div class="card-carousel--card--footer">
               <p>{{ item.name }}</p>
               <button style="float:right" @click="incrementVote(item.id)" :disabled="disableVote">+1</button>
@@ -67,14 +65,9 @@ data() {
 }
 </script>
 
-
-
 <style>
-
     /* Carousel */
-
-    
-    .card-carousel-wrapper {
+  .card-carousel-wrapper {
   display: block;
   align-items: center;
   justify-content: center;
