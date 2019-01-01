@@ -1,6 +1,11 @@
 ﻿<template>
     <div>
-        <map-carousel :maps="maps"></map-carousel>
+        <map-carousel :maps="maps">
+            <template slot-scope="slotProps">
+                <div style="float:left">4 votes</div>
+                <button v-on:click="voted(slotProps.map)" style="float:right">+1</button>
+            </template>
+        </map-carousel>
     </div>
 </template>
 
@@ -16,6 +21,14 @@ export default {
         return {
             maps: [ {name:'test1', route:mapPolyLine}, {name:'test2', route:mapPolyLine} ]
         }
+    },
+
+    methods: {
+
+        voted: function(map) {
+            console.log(map.name)
+        }
+
     }
 }
 </script>

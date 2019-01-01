@@ -1,7 +1,11 @@
 <template>
     <div>
         <Loading :loading="mapsLoading" :size="50"/>
-        <MapCarousel :maps="maps"/>
+        <map-carousel :maps="maps">
+            <template slot-scope="slotProps">
+                <button v-on:click="suggested(slotProps.map)" style="margin: auto">Suggest</button>
+            </template>
+        </map-carousel>
     </div>
 </template>
 
@@ -24,6 +28,12 @@ export default {
         this.maps = response.data
         this.mapsLoading = false
     },
+
+    methods: {
+        suggested: function(map) {
+            console.log(map.name)
+        }
+    }
     
 }
 </script>
