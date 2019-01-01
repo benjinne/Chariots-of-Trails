@@ -36,32 +36,41 @@ body, #app{
     /* keeps navbar ontop of leaflet maps */
     z-index: 1001;
     position: fixed;
+    top: 0;
 }
 
-.main-view {
+.main-view-list, .main-view {
     margin: auto;
 }
 
+
 /* mobile */
 @media (max-width: 575px) {
+    .main-view-list, .main-view{
+        margin-top: 59px;
+        padding-top: 30px;
+    }
     .main-view{
-        padding-top: 59px;
+        width: fit-content;
+    }
+    .main-view-list{
+        width: calc(100% - 60px);
     }
 }
 
 /* desktop */
 @media (min-width: 576px) {
-
     #app {
         display: flex;
     }
-
-    /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-view{
+    .main-view-list, .main-view{
         padding-left: 215px;
+        /* removes padding-top when set on nav-button press */
         padding-top: 0px !important;
     }
-
+    .main-view-list{
+        width: calc(100% - 150px);
+    }
     .main-nav {
         height: inherit;
         width: 215px;
@@ -74,7 +83,7 @@ body, #app{
     }
     .navbar-collapse {
         border-top: 1px solid #444;
-        padding: 0px;
+        padding-top: 15px;
     }
     .navbar-collapse ul {
         float: none;
@@ -89,7 +98,6 @@ body, #app{
         border-radius: 4px;
         color: white;
     }
-    
     .navbar a {
         /* If a menu item's text is too long, truncate it */
         width: 95%; /* Bug to fix here. Width 100% overflow. */
@@ -111,7 +119,6 @@ body, #app{
     font-size: 16px;
     cursor:pointer;
 }
-
 .strava-button-div {
     position: relative;
     top: 50%;
