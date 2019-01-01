@@ -39,21 +39,21 @@ body, #app{
     top: 0;
 }
 
-.upcoming-main-view, .main-view {
+.main-view-list, .main-view {
     margin: auto;
 }
 
 
 /* mobile */
 @media (max-width: 575px) {
-    .upcoming-main-view, .main-view{
+    .main-view-list, .main-view{
         margin-top: 59px;
         padding-top: 30px;
     }
     .main-view{
         width: fit-content;
     }
-    .upcoming-main-view{
+    .main-view-list{
         width: calc(100% - 60px);
     }
 }
@@ -63,12 +63,12 @@ body, #app{
     #app {
         display: flex;
     }
-    .upcoming-main-view, .main-view{
+    .main-view-list, .main-view{
         padding-left: 215px;
         /* removes padding-top when set on nav-button press */
         padding-top: 0px !important;
     }
-    .upcoming-main-view{
+    .main-view-list{
         width: calc(100% - 150px);
     }
     .main-nav {
@@ -83,7 +83,7 @@ body, #app{
     }
     .navbar-collapse {
         border-top: 1px solid #444;
-        padding: 0px;
+        padding-top: 15px;
     }
     .navbar-collapse ul {
         float: none;

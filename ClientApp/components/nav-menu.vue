@@ -8,11 +8,10 @@
                 <span class="icon-bar"></span>
             </button>
             <router-link class="navbar-brand" to="/"><icon :icon="['fas', 'fire']"/> Chariots of Trails</router-link>
-
             <transition name="slide">
                 <div :class="'collapse navbar-collapse' + (!collapsed ? ' show':'')" v-show="!collapsed">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" v-for="(route, index) in routes" :key="index">
+                        <li class="nav-item" v-for="(route, index) in routes" :key="index" v-if="route.icon != null">
                             <router-link :to="route.path" exact-active-class="active">
                                 <icon :icon="route.icon" class="mr-2" /><span>{{ route.display }}</span> 
                             </router-link>
@@ -38,10 +37,11 @@
           toggleCollapsed: function (event) {
             this.collapsed = !this.collapsed
             // used for mobile when clicking menu button, this shifts the main-view down
+            var mainView = document.body.childNodes[1].childNodes[2]
             if(this.collapsed){
-                document.getElementsByClassName("main-view")[0].style.paddingTop = ""
+                mainView.style.paddingTop = ""
             }else{
-                document.getElementsByClassName("main-view")[0].style.paddingTop = "179px"
+                mainView.style.paddingTop = "179px"
             }
         }
       }
@@ -55,7 +55,6 @@
     .slide-enter, .slide-leave-to {
     max-height: 0px;
     }
-
     .slide-enter-to, .slide-leave {
     max-height: 20em;
     }
