@@ -3,29 +3,21 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LiteDB" Version="4.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Strava.NET" Version="3.4.4" />
+    <PackageReference Include="LiteDB" Version="4.1.4"/>
+    <PackageReference Include="Microsoft.AspNetCore.App"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2"/>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
   </ItemGroup>
   <ItemGroup>
-    <!-- Files not to show in IDE -->
-    <None Remove="yarn.lock" />
-
-    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
-    <Content Remove="ClientApp\**" />
+    <None Remove="yarn.lock"/>
+    <Content Remove="ClientApp\**"/>
   </ItemGroup>
-
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
-    <Exec Command="npm install --ignore-scripts" />
-    <Exec Command="npm run build" />
-
-    <!-- Include the newly-built files in the publish output -->
+    <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;"/>
+    <Exec Command="npm install --ignore-scripts"/>
+    <Exec Command="npm run build"/>
     <ItemGroup>
-      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**"/>
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

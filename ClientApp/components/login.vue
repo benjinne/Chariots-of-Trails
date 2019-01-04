@@ -24,7 +24,7 @@ export default {
         window.location = 
         "https://www.strava.com/oauth/authorize?" +
         "client_id=" + config.client_id +
-        "&redirect_uri=" + config.redirect_uri +
+        "&redirect_uri=" + "http://" + window.location.hostname + ":5050/api/main/login" +
         "&response_type=" + config.response_type +
         "&approval_prompt=" + config.approval_prompt +
         "&scope=" + config.scope

@@ -24,7 +24,7 @@ Vue.use(VueRouter)
 
 //test to see if logged in
 async function sessionExistsTest(){
-  let test = await axios.get(`/api/strava/sessionTest`)
+  let test = await axios.get(`/api/main/sessionTest`)
   return test.data
 }
 

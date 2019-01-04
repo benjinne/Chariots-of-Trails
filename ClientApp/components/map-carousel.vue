@@ -1,13 +1,12 @@
 <template>
     <vue-carousel :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [830, 2], [1130, 3], [1430, 4], [1730, 5]]">
-        <slide v-for="map in maps" :key="map.id">
-            <div style="width: fit-content; margin: auto">
-                <h2>{{map.name}}</h2>
-                <l-map class="map" ref="map" @leaflet:load="insertPolyline(map.route)">
+        <slide v-for="route in routes" :key="route.id">
+            <div style="width: fit-content; margin: auto; text-align:center;">
+                <h2>{{route.name}}</h2>
+                <l-map class="map" ref="map" @leaflet:load="insertPolyline(route.map.summary_polyline)">
                     <l-tile-layer :url="url" :attribution="attribution"/>
                 </l-map>
-                <div style="float:left">4 votes</div>
-                <button style="float:right">+1</button>
+                <slot v-bind:route="route"/>
             </div>
         </slide>
     </vue-carousel>
@@ -18,14 +17,11 @@ import { Carousel as VueCarousel, Slide } from 'vue-carousel';
 import { LMap, LPolyline, LTileLayer} from 'vue2-leaflet';
 
 export default {
-
-    name: 'carousel',
-
+    
     components: {LMap, LPolyline, LTileLayer, VueCarousel, Slide},
 
     props: {
-        maps: {
-            type: Array,
+        routes: {
             required: true
         }
     },
@@ -70,10 +66,5 @@ export default {
     .map {
         height: 250px;
         width: 250px;
-    }
-
-    .center {
-        margin: auto;
-        width: fit-content;
     }
 </style>
