@@ -3,8 +3,8 @@
         <Loading :loading="mapsLoading" :size="50"/>
         <map-carousel :routes="routes">
             <template slot-scope="slotProps">
-                <div style="float:left">4 votes</div>
-                <button v-on:click="voted(slotProps.route)" style="float:right">+1</button>
+                <div style="float:left">{{slotProps.route.votedBy == null ? 0 : slotProps.route.votedBy.length}} votes</div>
+                <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>
             </template>
         </map-carousel>
     </div>
@@ -25,17 +25,19 @@ export default {
     },
 
     async mounted() {
-        let response = await this.$http.get(`/api/main/suggestedRoutes`)
-        this.routes = response.data
+        await this.updateSuggestedRoutes()
         this.mapsLoading = false
     },
 
     methods: {
-
-        voted: function(route) {
-            console.log(route)
+        vote: async function(route) {
+            await this.$http.post(`/api/main/vote?routeId=${route.id}`)
+            await this.updateSuggestedRoutes();
+        },
+        updateSuggestedRoutes: async function() {
+            let response = await this.$http.get(`/api/main/suggestedRoutes`)
+            this.routes = response.data
         }
-
     }
 }
 </script>

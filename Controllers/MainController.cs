@@ -29,11 +29,19 @@ namespace Chariots_of_Trails.Controllers
             return Ok();
         }
 
+        [HttpPost("[action]")]
+        public IActionResult vote([FromQuery(Name = "routeId")] string routeId)
+        {
+            string userId = HttpContext.Session.GetString("user_id");
+            dataBaseProvider.voteByRouteIdAndUserId(routeId, userId);
+            return Ok();
+        }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> updateUserRoutes()
         {
-            string token = HttpContext.Session.GetString("user_id");
-            User user = dataBaseProvider.getUserById(token);
+            string userId = HttpContext.Session.GetString("user_id");
+            User user = dataBaseProvider.getUserById(userId);
             user.routes = await stravaProvider.getUserRoutes(user);
             dataBaseProvider.updateUser(user);
             return Ok(user.routes);
@@ -48,8 +56,8 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public IActionResult userRoutes()
         {
-            string token = HttpContext.Session.GetString("user_id");
-            return Ok(dataBaseProvider.getUserById(token).routes);
+            string userId = HttpContext.Session.GetString("user_id");
+            return Ok(dataBaseProvider.getUserById(userId).routes);
         }
 
         [HttpGet("[action]")]
@@ -61,12 +69,14 @@ namespace Chariots_of_Trails.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> login([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
+            //todo check on each strava api call if users access token has expired and if so refresh it
+            //todo if user has token that's not expired, don't try to get a new one
             User user = await stravaProvider.getUser(state, inCode, scope);
             if(dataBaseProvider.userExists(user))
             {
-                //add existing routes from database to user before updating user to prevent deleting routes
+                //add existing routes from database to user before updating user in database to prevent deleting routes
                 User savedUser = dataBaseProvider.getUserById(user.id);
-                if(savedUser.hasRoutes)
+                if(savedUser.routes != null)
                 {
                     user.routes = savedUser.routes;
                 }

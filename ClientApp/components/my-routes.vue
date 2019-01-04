@@ -35,7 +35,6 @@ export default {
 
     methods: {
         suggested: async function(route) {
-            console.log(route)
             this.$http.post(`/api/main/suggestRoute?routeId=${route.id}`)
         },
         update: async function() {

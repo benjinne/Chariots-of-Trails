@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Chariots_of_Trails.Models
 {
     public class Route
@@ -10,6 +12,7 @@ namespace Chariots_of_Trails.Models
         public string name  { get; set; }
         public string estimated_moving_time { get; set; }
         public bool suggested { get; set; }
+        public List<Athlete> votedBy { get; set; } 
     }
 
     public class Map

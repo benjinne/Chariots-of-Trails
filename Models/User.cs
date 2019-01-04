@@ -12,7 +12,6 @@ namespace Chariots_of_Trails.Models
         public string access_token { get; set; }
         public Athlete athlete { get; set; }
         public List<Route> routes { get; set; }
-        public bool hasRoutes{ get{return (routes != null);} }
     }
     public class Athlete
     {

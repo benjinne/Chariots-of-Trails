@@ -34,18 +34,18 @@ namespace Chariots_of_Trails.Providers
             col.Update(user);
         }
 
-        public User getUserById(string id)
+        public User getUserById(string userId)
         {
             var col = db.GetCollection<User>("users");
-            User user = col.FindOne(Query.EQ("_id", id));
+            User user = col.FindOne(Query.EQ("_id", userId));
             return user;
         }
 
-        public void suggestRouteByRouteId(string id)
+        public void suggestRouteByRouteId(string routeId)
         {
             var col = db.GetCollection<User>("users");
-            var user = col.FindOne(Query.EQ("$.routes[*]._id", id));
-            user.routes.Find(x => x.id == id).suggested = true;
+            var user = col.FindOne(Query.EQ("$.routes[*]._id", routeId));
+            user.routes.Find(x => x.id == routeId).suggested = true;
             col.Update(user);
         }
 
@@ -63,5 +63,27 @@ namespace Chariots_of_Trails.Providers
             }
             return(suggestedRoutes);
         }
+
+        //only allows the voter to vote once
+        public void voteByRouteIdAndUserId(string routeId, string userId)
+        {
+            var col = db.GetCollection<User>("users");
+            Athlete voter = col.FindOne(Query.EQ("_id", userId)).athlete;
+            User routeHolder = col.FindOne(Query.EQ("$.routes[*]._id", routeId));
+            Route votedRoute = routeHolder.routes.Find(x => x.id == routeId);
+            if(votedRoute.votedBy != null)
+            {
+                if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
+                    votedRoute.votedBy.Add(voter);
+                }
+            }
+            else
+            {
+                votedRoute.votedBy = new List<Athlete>();
+                votedRoute.votedBy.Add(voter);
+            }
+            col.Update(routeHolder);
+        }
+
     }
 }
