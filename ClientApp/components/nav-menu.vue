@@ -43,7 +43,7 @@
           toggleCollapsed: function (event) {
             this.collapsed = !this.collapsed
             // used for mobile when clicking menu button, this shifts the main-view down
-            var mainView = document.body.childNodes[1].childNodes[2]
+            var mainView = document.getElementById("main")
             if(this.collapsed){
                 mainView.style.paddingTop = ""
             }else{

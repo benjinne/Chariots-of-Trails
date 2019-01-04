@@ -3,7 +3,7 @@
         <div class="main-nav">
             <nav-menu params="route: route"></nav-menu>
         </div>
-        <div class="main-view">
+        <div id="main" class="main-view">
             <router-view></router-view>
         </div>
     </div>
