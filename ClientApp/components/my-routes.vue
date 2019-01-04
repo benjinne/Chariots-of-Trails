@@ -1,11 +1,15 @@
 <template>
     <div>
         <Loading :loading="mapsLoading" :size="50"/>
-        <map-carousel :maps="maps">
+        <map-carousel :routes="routes">
             <template slot-scope="slotProps">
-                <button v-on:click="suggested(slotProps.map)" style="margin: auto">Suggest</button>
+                <button v-on:click="suggested(slotProps.route)" style="margin: auto">Suggest</button>
             </template>
         </map-carousel>
+        <div class="bottom">
+            <button v-on:click="update()" >update routes</button>
+            <div>This will get the latested updates from strava. Warning! this will remove suggested routes from upcomming and reset votes(once implemented)</div>
+        </div>
     </div>
 </template>
 
@@ -18,20 +22,25 @@ export default {
 
     data() {
         return {
-            maps: null,
+            routes: null,
             mapsLoading: true
         }
     },
     
     async mounted() {
-        let response = await this.$http.get(`/api/strava/routes`)
-        this.maps = response.data
+        let response = await this.$http.get(`/api/main/userRoutes`)
+        this.routes = response.data
         this.mapsLoading = false
     },
 
     methods: {
-        suggested: function(map) {
-            console.log(map.name)
+        suggested: async function(route) {
+            console.log(route)
+            this.$http.post(`/api/main/suggestRoute?routeId=${route.id}`)
+        },
+        update: async function() {
+            let response = await this.$http.get(`/api/main/updateUserRoutes`)
+            this.routes = response.data
         }
     }
     
@@ -40,4 +49,7 @@ export default {
 
 <style>
     @import "~leaflet/dist/leaflet.css";
+    .bottom{
+        padding-top: 50px;
+    }
 </style>

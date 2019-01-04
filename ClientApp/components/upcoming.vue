@@ -1,32 +1,39 @@
 ﻿<template>
     <div>
-        <map-carousel :maps="maps">
+        <Loading :loading="mapsLoading" :size="50"/>
+        <map-carousel :routes="routes">
             <template slot-scope="slotProps">
                 <div style="float:left">4 votes</div>
-                <button v-on:click="voted(slotProps.map)" style="float:right">+1</button>
+                <button v-on:click="voted(slotProps.route)" style="float:right">+1</button>
             </template>
         </map-carousel>
     </div>
 </template>
 
 <script>
+import Loading from './loading.vue'
 import MapCarousel from './map-carousel.vue'
-
-const mapPolyLine = 'w|xrF`kjsMq@gE{p@b\\zLj^{AdCxDfQaY|LxI`c@lE`qAvBtUbHxZgJrp@~Stj@vGbXsAb\\zIzoA|CdaBiH`BuRvNeLiA}WpOqJq[|G_T{Ewd@{Acc@cEgTd@sRwBsUnBgV_DpA~CqAG_BoLgm@e@ed@uE{RfS_YjEcNcGmLaAeHyD}{AjY}mAuYeuAr^iD|P`D~JxFfZp`@lg@~iA|A~BjCiCA_DsD{C~AeICuUcBeLaXyt@gK`FrBrLgBxBn@S'
     
 export default {
-    components: {MapCarousel},
+    components: {MapCarousel, Loading},
 
     data () {
         return {
-            maps: [ {name:'test1', route:mapPolyLine}, {name:'test2', route:mapPolyLine} ]
+            routes: null,
+            mapsLoading: true
         }
+    },
+
+    async mounted() {
+        let response = await this.$http.get(`/api/main/suggestedRoutes`)
+        this.routes = response.data
+        this.mapsLoading = false
     },
 
     methods: {
 
-        voted: function(map) {
-            console.log(map.name)
+        voted: function(route) {
+            console.log(route)
         }
 
     }

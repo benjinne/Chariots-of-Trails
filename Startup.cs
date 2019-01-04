@@ -34,6 +34,7 @@ namespace Chariots_of_Trails
 
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<Providers.IStravaProvider, Providers.StravaProvider>();
+            services.AddSingleton<Providers.IDataBaseProvider, Providers.DataBaseProvider>();
 
         }
 

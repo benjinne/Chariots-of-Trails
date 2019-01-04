@@ -1,14 +1,12 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Chariots_of_Trails.Models;
 
 namespace Chariots_of_Trails.Providers
 {
     public interface IStravaProvider
     {
-        string getUser();
-
-        string getTrails();
-
-        // string getImage(string userName);
+        Task<User> getUser(string state, string inCode,string scope);
+        Task<List<Route>> getUserRoutes(User user);
     }
 }

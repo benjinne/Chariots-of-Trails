@@ -253,3 +253,5 @@ _Pvt_Extensions
 .vscode/
 
 config.json
+
+*.db
