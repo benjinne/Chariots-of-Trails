@@ -11,5 +11,6 @@ namespace Chariots_of_Trails.Providers
         void suggestRouteByRouteId(string id);
         List<Route> getSuggestedRoutes();
         User getUserById(string token);
+        void voteByRouteIdAndUserId(string routeId, string userId);
     }
 }
