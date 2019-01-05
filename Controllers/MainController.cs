@@ -10,6 +10,7 @@ using Chariots_of_Trails.Models;
 
 namespace Chariots_of_Trails.Controllers
 {
+    [LoginCheckFilter]
     [Route("api/[controller]")]
     public class MainController : Controller
     {
@@ -67,7 +68,13 @@ namespace Chariots_of_Trails.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> login([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
+        public IActionResult login()
+        {
+            return stravaProvider.login(this);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> recieveRedirect([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
             //todo check on each strava api call if users access token has expired and if so refresh it
             //todo if user has token that's not expired, don't try to get a new one

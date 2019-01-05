@@ -16,19 +16,11 @@
 </template>
 
 <script >
-import config from '../../config.json'
-
 export default {
-  methods: {
-    async loginInit () {
-        window.location = 
-        "https://www.strava.com/oauth/authorize?" +
-        "client_id=" + config.client_id +
-        "&redirect_uri=" + "http://" + window.location.hostname + ":5050/api/main/login" +
-        "&response_type=" + config.response_type +
-        "&approval_prompt=" + config.approval_prompt +
-        "&scope=" + config.scope
+    methods: {
+        async loginInit() {
+            this.$http.post('/api/main/login');
+            }
+        }
     }
-  }
-}
 </script>
