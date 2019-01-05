@@ -3,8 +3,12 @@
         <Loading :loading="mapsLoading" :size="50"/>
         <map-carousel :routes="routes">
             <template slot-scope="slotProps">
-                <div style="float:left">{{slotProps.route.votedBy == null ? 0 : slotProps.route.votedBy.length}} votes</div>
+                <div style="float:left">
+                    <img class="avatar" v-for="athlete in slotProps.route.votedBy" :key="athlete.id" :src="athlete.profile"/>
+                    {{slotProps.route.votedBy == null ? 0 : slotProps.route.votedBy.length}} votes
+                </div>
                 <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>
+
             </template>
         </map-carousel>
     </div>
@@ -41,3 +45,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .avatar{
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        color: transparent;
+        border: 2px solid #fff;
+    }
+</style>

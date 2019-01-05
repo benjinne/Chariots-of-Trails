@@ -73,9 +73,9 @@ namespace Chariots_of_Trails.Providers
             Route votedRoute = routeHolder.routes.Find(x => x.id == routeId);
             if(votedRoute.votedBy != null)
             {
-                if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
+                //if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
                     votedRoute.votedBy.Add(voter);
-                }
+                //}
             }
             else
             {
