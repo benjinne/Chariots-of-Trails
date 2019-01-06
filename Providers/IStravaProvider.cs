@@ -7,7 +7,7 @@ namespace Chariots_of_Trails.Providers
 {
     public interface IStravaProvider
     {
-        RedirectResult login(Controller controller);
+        string login(string host);
         Task<User> getUser(string state, string inCode,string scope);
         Task<List<Route>> getUserRoutes(User user);
     }

@@ -14,16 +14,14 @@ namespace Chariots_of_Trails.Controllers
         {
             ICollection<string> RouteValues = filterContext.ActionDescriptor.RouteValues.Values;
             //check prevents infinite checking
-            if( !(RouteValues.Contains("sessionTest") || RouteValues.Contains("login")) )
+            if( !(RouteValues.Contains("sessionTest") || RouteValues.Contains("login") || RouteValues.Contains("receiveRedirect")) )
             {
                 if (filterContext.HttpContext.Session.GetString("user_id") == null) 
                 {
-                    filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary 
-                        { 
-                            { "controller", "main" }, 
-                            { "action", "login" } 
-                        });
+                    JsonResult result = new JsonResult(new { error = "user has been logged out", location = "login" });
+                    result.StatusCode = 403;
+                    filterContext.Result = result;
+                    return;
                 }
             }
         }

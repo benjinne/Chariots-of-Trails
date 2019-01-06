@@ -67,14 +67,14 @@ namespace Chariots_of_Trails.Controllers
             return Ok(dataBaseProvider.getSuggestedRoutes());
         }
 
-        [HttpPost("[action]")]
+        [HttpGet("[action]")]
         public IActionResult login()
         {
-            return stravaProvider.login(this);
+            return Ok(stravaProvider.login(Request.Host.ToString()));
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> recieveRedirect([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
+        public async Task<IActionResult> receiveRedirect([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
             //todo check on each strava api call if users access token has expired and if so refresh it
             //todo if user has token that's not expired, don't try to get a new one

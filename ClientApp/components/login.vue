@@ -1,5 +1,5 @@
 <template>
-    <div align="middle" class="strava-button-div">
+    <div>
         <a href="#" @click="loginInit()">
             <svg width="193px" height="48px" viewBox="0 0 193 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>click here to login</title>
@@ -18,8 +18,9 @@
 <script >
 export default {
     methods: {
-        loginInit() {
-            this.$http.post('/api/main/login');
+        async loginInit() {
+            var response = await this.$http.get('/api/main/login')
+            window.location = response.data
             }
         }
     }

@@ -9,6 +9,18 @@ import { FontAwesomeIcon } from './icons'
 // Registration of global components
 Vue.component('icon', FontAwesomeIcon)
 
+//redirects if error was thrown see
+//https://github.com/axios/axios/issues/932
+axios.interceptors.response.use((response) => {
+  return response
+}, (error) => {
+  if (error.response && error.response.data && error.response.data.location) {
+    window.location = error.response.data.location
+  } else {
+    return Promise.reject(error)
+  }
+})
+
 Vue.prototype.$http = axios
 
 sync(store, router)

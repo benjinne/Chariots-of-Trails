@@ -24,16 +24,16 @@ namespace Chariots_of_Trails.Providers
             stravaAppConfig = JsonConvert.DeserializeObject(System.IO.File.ReadAllText("config.json"));
         }
 
-        public RedirectResult login(Controller controller)
+        public string login(string host)
         {
             string authenticationString = 
             "https://www.strava.com/oauth/authorize?" + 
             $"client_id={stravaAppConfig.client_id}&" +
-            $"redirect_uri=http://{controller.Request.Host}/api/main/recieveRedirect&" +
+            $"redirect_uri=http://{host}/api/main/receiveRedirect&" +
             $"response_type={stravaAppConfig.response_type}&" +
             $"approval_prompt={stravaAppConfig.approval_prompt}&" +
             $"scope={stravaAppConfig.scope}";
-            return controller.Redirect(authenticationString);
+            return authenticationString;
         }
 
         public async Task<User> getUser(string state, string inCode,string scope)
