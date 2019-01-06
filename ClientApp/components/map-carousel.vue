@@ -1,7 +1,7 @@
 <template>
-    <vue-carousel :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [830, 2], [1130, 3], [1430, 4], [1730, 5]]">
+    <vue-carousel ref="root" :touch-drag="false" :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [830, 2], [1130, 3], [1430, 4], [1730, 5]]">
         <slide v-for="route in routes" :key="route.id">
-            <div style="width: fit-content; margin: auto; text-align:center;">
+            <div style="width: fit-content; margin: auto; text-align:center; height: 100%">
                 <h2>{{route.name}}</h2>
                 <l-map class="map" ref="map" @leaflet:load="insertPolyline(route.map.summary_polyline)">
                     <l-tile-layer :url="url" :attribution="attribution"/>

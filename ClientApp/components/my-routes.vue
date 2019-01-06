@@ -8,7 +8,7 @@
         </map-carousel>
         <div class="bottom">
             <button v-on:click="update()" >update routes</button>
-            <div>This will get the latested updates from strava. Warning! this will remove suggested routes from upcomming and reset votes(once implemented)</div>
+            <div>This will get the latested updates from strava. Warning! this will remove your suggested routes from upcomming and reset its votes</div>
         </div>
     </div>
 </template>
