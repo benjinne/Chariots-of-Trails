@@ -18,7 +18,7 @@
 <script >
 export default {
     methods: {
-        async loginInit() {
+        loginInit() {
             this.$http.post('/api/main/login');
             }
         }

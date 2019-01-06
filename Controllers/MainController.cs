@@ -67,7 +67,7 @@ namespace Chariots_of_Trails.Controllers
             return Ok(dataBaseProvider.getSuggestedRoutes());
         }
 
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public IActionResult login()
         {
             return stravaProvider.login(this);
