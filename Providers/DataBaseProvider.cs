@@ -53,15 +53,12 @@ namespace Chariots_of_Trails.Providers
         {
             var col = db.GetCollection<User>("users");
             IEnumerator<User> usersWithSuggestedRoutes = col.Find(Query.EQ("$.routes[*].suggested", true)).GetEnumerator();
-            List<Route> suggestedRoutes = new List<Route>();
+            List<Route> allSuggestedRoutes = new List<Route>();
             while(usersWithSuggestedRoutes.MoveNext())
             {
-                if(usersWithSuggestedRoutes.Current.routes != null)
-                {
-                    suggestedRoutes.AddRange(usersWithSuggestedRoutes.Current.routes.FindAll(x => x.suggested == true));
-                }
+                allSuggestedRoutes.AddRange(usersWithSuggestedRoutes.Current.routes.FindAll(x => x.suggested == true));
             }
-            return(suggestedRoutes);
+            return(allSuggestedRoutes);
         }
 
         //only allows the voter to vote once
@@ -71,17 +68,10 @@ namespace Chariots_of_Trails.Providers
             Athlete voter = col.FindOne(Query.EQ("_id", userId)).athlete;
             User routeHolder = col.FindOne(Query.EQ("$.routes[*]._id", routeId));
             Route votedRoute = routeHolder.routes.Find(x => x.id == routeId);
-            if(votedRoute.votedBy != null)
-            {
-                //if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
-                    votedRoute.votedBy.Add(voter);
-                //}
-            }
-            else
-            {
-                votedRoute.votedBy = new List<Athlete>();
+            //this prevents a user from voting twice on a route
+            //if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
                 votedRoute.votedBy.Add(voter);
-            }
+            //}
             col.Update(routeHolder);
         }
 

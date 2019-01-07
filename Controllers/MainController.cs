@@ -82,11 +82,7 @@ namespace Chariots_of_Trails.Controllers
             if(dataBaseProvider.userExists(user))
             {
                 //add existing routes from database to user before updating user in database to prevent deleting routes
-                User savedUser = dataBaseProvider.getUserById(user.id);
-                if(savedUser.routes != null)
-                {
-                    user.routes = savedUser.routes;
-                }
+                user.routes = dataBaseProvider.getUserById(user.id).routes;
                 dataBaseProvider.updateUser(user);
             }
             else

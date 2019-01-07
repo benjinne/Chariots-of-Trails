@@ -6,7 +6,7 @@
                 <button v-on:click="suggested(slotProps.route)" style="margin: auto">Suggest</button>
             </template>
         </map-carousel>
-        <div class="bottom">
+        <div>
             <button v-on:click="update()" >update routes</button>
             <div>This will get the latested updates from strava. Warning! this will remove your suggested routes from upcomming and reset its votes</div>
         </div>
@@ -48,7 +48,9 @@ export default {
 
 <style>
     @import "~leaflet/dist/leaflet.css";
-    .bottom{
-        padding-top: 50px;
+    .VueCarousel{
+        border-bottom: 1px solid #444;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
     }
 </style>

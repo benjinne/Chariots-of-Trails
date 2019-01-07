@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Chariots_of_Trails.Models
@@ -6,13 +7,15 @@ namespace Chariots_of_Trails.Models
     {
         public string description { get; set; }
         public string distance { get; set; }
+        public string miles { get{return (Math.Round(Convert.ToDouble(distance) * 0.000621371, 2) ).ToString();} }
         public string elevation_gain { get; set; }
+        public string elevationFt { get{return (Math.Round(Convert.ToDouble(elevation_gain) * 3.28084)).ToString();} }
         public string id { get; set; }
         public Map map { get; set; }
         public string name  { get; set; }
         public string estimated_moving_time { get; set; }
         public bool suggested { get; set; }
-        public List<Athlete> votedBy { get; set; } 
+        public List<Athlete> votedBy { get; set; } = new List<Athlete>();
     }
 
     public class Map

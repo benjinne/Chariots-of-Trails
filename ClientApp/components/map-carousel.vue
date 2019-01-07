@@ -1,11 +1,13 @@
 <template>
     <vue-carousel ref="root" :touch-drag="false" :mouse-drag="false" :navigationEnabled="true" :perPageCustom="[[0,1], [830, 2], [1130, 3], [1430, 4], [1730, 5]]">
         <slide v-for="route in routes" :key="route.id">
-            <div style="width: fit-content; margin: auto; text-align:center; height: 100%">
+            <div class="map-wrapper">
                 <h2>{{route.name}}</h2>
+                <slot name="votes" v-bind:votes="route.votedBy.length"/>
                 <l-map class="map" ref="map" @leaflet:load="insertPolyline(route.map.summary_polyline)">
                     <l-tile-layer :url="url" :attribution="attribution"/>
                 </l-map>
+                <div>{{route.description}}</div>
                 <slot v-bind:route="route"/>
             </div>
         </slide>
@@ -65,6 +67,13 @@ export default {
 
     .map {
         height: 250px;
+        width: 250px;
+    }
+    .map-wrapper{
+        width: fit-content;
+        margin: auto;
+        text-align:center;
+        height: 100%;
         width: 250px;
     }
 </style>
