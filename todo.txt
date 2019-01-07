@@ -1,0 +1,64 @@
+TODO:
+
+Display:
+	
+	display user profile in my-routes (pic/name)
+	who suggested the route
+	Login changes to Logout once logged in
+	show current page in mobile view
+	show users how to add their own routes
+	show upcoming routes without ability to vote when not logged in
+	on login page explain to user that strava is purely used for authentication and they don't need to use strava. Also it's used for easily creating routes. (on desktop)
+	display more route details
+	make better favicon and do this - https://andrewlock.net/adding-favicons-to-your-asp-net-core-website-with-realfavicongenerator/
+	display something when no map routes exist
+	Figure out what to do with multiple days, and different groups on the same day
+	use dynamic css instead of updating in javascript on expanding navbar in mobile, and re-naming carousel routes to main-view-list
+		https://www.youtube.com/watch?v=4Gh5YcvGDjI&t=417s
+	Display error message when server is down and user tries interact with server
+	DONE: Show who voted in upcoming trails
+	DONE: Sort most voted map first
+
+	EndGoal: position items in a visually appealing way for both desktop and mobile
+
+Database:
+
+	Every day at 5pm upcoming trails are deleted
+
+	Reduce strava api calls
+		600/15min
+		30000 daily
+		
+		use something more permanent than a session to allow the user to stay logged in longer
+		DONE: only use strava api calls on login
+		DONE: such as get profile info, and routes (2 queries)
+		DONE: strava api redirect dynamically to hosted ip, localhost, 192.168.1.*, etc
+	
+	separate database/server objects from view objects since view objects contain way more data than is needed
+	
+Security:
+
+	use https with free cert from google
+		would need to update api calls also
+
+	check if user's access_token has expired, and if so use the refresh token to get a new one
+		This is important because if the user stays logged in more than 6 hours, strava api calls will stop working
+		http://developers.strava.com/docs/authentication/
+		
+	login should occur on aspnetcore side instead of using sessionTest because a local proxy could reply with true when the session doesn't exist
+		possibly add service that checks cookie on initial page load
+	
+	DONE: verify user is still logged in after server restarts, if not redirect to login
+		currently user_id session invalidates on server restarts, but users can send api calls
+
+Functionality:
+
+	implement logout
+	
+	modify vue and aspnet to run in production
+		then create a docker image and host on unraid server
+		
+	use webhooks to automatically update a users route maps? http://developers.strava.com/docs/webhooks/
+	
+	DONE: implement voting
+	
