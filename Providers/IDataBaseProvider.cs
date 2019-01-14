@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Chariots_of_Trails.Models;
 
@@ -9,8 +10,9 @@ namespace Chariots_of_Trails.Providers
         void insertUser(User user);
         void updateUser(User user);
         void suggestRouteByRouteId(string id);
-        List<Route> getSuggestedRoutes();
+        IEnumerator<Route> getSuggestedRoutes();
         User getUserById(string token);
         void voteByRouteIdAndUserId(string routeId, string userId);
+        void logException(Exception ex);
     }
 }

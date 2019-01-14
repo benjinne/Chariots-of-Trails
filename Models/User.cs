@@ -10,7 +10,9 @@ namespace Chariots_of_Trails.Models
         public int expires_in { get; set; }
         public string refresh_token { get; set; }
         public string access_token { get; set; }
+        [BsonRef("athletes")]
         public Athlete athlete { get; set; }
+        [BsonRef("routes")]
         public List<Route> routes { get; set; } = new List<Route>();
     }
     public class Athlete

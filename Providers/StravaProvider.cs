@@ -48,6 +48,9 @@ namespace Chariots_of_Trails.Providers
             };
             var content = new FormUrlEncodedContent(toPost);
             var response = await client.PostAsync("https://www.strava.com/oauth/token", content);
+            if(response.StatusCode.ToString() != "OK"){
+                throw new Exception("login failed");
+            }
             string responseString = await response.Content.ReadAsStringAsync();
             return(JsonConvert.DeserializeObject<User>(responseString));
         }

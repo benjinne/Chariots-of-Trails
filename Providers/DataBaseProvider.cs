@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Chariots_of_Trails.Models;
@@ -18,62 +19,88 @@ namespace Chariots_of_Trails.Providers
 
         public bool userExists(User user)
         {
-            var col = db.GetCollection<User>("users");
-            return(col.Exists(Query.EQ("_id", user.id)));
+            var users = db.GetCollection<User>("users");
+            return(users.Exists(Query.EQ("_id", user.id)));
+        }
+
+        public bool routeExists(Route route)
+        {
+            var routes = db.GetCollection<Route>("routes");
+            return(routes.Exists(Query.EQ("_id", route.id)));
         }
 
         public void insertUser(User user)
         {
             var users = db.GetCollection<User>("users");
+            var athletes = db.GetCollection<Athlete>("athletes");
             users.Insert(user);
+            athletes.Insert(user.athlete);
         }
 
         public void updateUser(User user)
         {
-            var col = db.GetCollection<User>("users");
-            col.Update(user);
+            var users = db.GetCollection<User>("users");
+            var routes = db.GetCollection<Route>("routes");
+            users.Update(user);
+            foreach(Route route in user.routes)
+            {
+                if(routeExists(route))
+                {
+                    routes.Update(route);
+                }
+                else
+                {
+                    routes.Insert(route);
+                }
+            }
         }
 
         public User getUserById(string userId)
         {
-            var col = db.GetCollection<User>("users");
-            User user = col.FindOne(Query.EQ("_id", userId));
+            var users = db.GetCollection<User>("users");
+            User user = users.Include(x => x.routes)
+                             .Include(x => x.athlete)
+                             .FindOne(Query.EQ("_id", userId));
             return user;
         }
 
         public void suggestRouteByRouteId(string routeId)
         {
-            var col = db.GetCollection<User>("users");
-            var user = col.FindOne(Query.EQ("$.routes[*]._id", routeId));
-            user.routes.Find(x => x.id == routeId).suggested = true;
-            col.Update(user);
+            var routes = db.GetCollection<Route>("routes");
+            var route = routes.FindOne(Query.EQ("_id", routeId));
+            route.suggested = true;
+            routes.Update(route);
         }
 
-        public List<Route> getSuggestedRoutes()
+        public IEnumerator<Route> getSuggestedRoutes()
         {
-            var col = db.GetCollection<User>("users");
-            IEnumerator<User> usersWithSuggestedRoutes = col.Find(Query.EQ("$.routes[*].suggested", true)).GetEnumerator();
-            List<Route> allSuggestedRoutes = new List<Route>();
-            while(usersWithSuggestedRoutes.MoveNext())
-            {
-                allSuggestedRoutes.AddRange(usersWithSuggestedRoutes.Current.routes.FindAll(x => x.suggested == true));
-            }
-            return(allSuggestedRoutes);
+            var routes = db.GetCollection<Route>("routes");
+            IEnumerator<Route> suggestedRoutes = routes.Find(Query.EQ("suggested", true)).GetEnumerator();
+            return(suggestedRoutes);
         }
 
         //only allows the voter to vote once
         public void voteByRouteIdAndUserId(string routeId, string userId)
         {
-            var col = db.GetCollection<User>("users");
-            Athlete voter = col.FindOne(Query.EQ("_id", userId)).athlete;
-            User routeHolder = col.FindOne(Query.EQ("$.routes[*]._id", routeId));
+            var users = db.GetCollection<User>("users");
+            Athlete voter = users.FindOne(Query.EQ("_id", userId)).athlete;
+            User routeHolder = users.FindOne(Query.EQ("$.routes[*]._id", routeId));
             Route votedRoute = routeHolder.routes.Find(x => x.id == routeId);
             //this prevents a user from voting twice on a route
-            //if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
+            if(!votedRoute.votedBy.Exists(x => x.id == voter.id)){
                 votedRoute.votedBy.Add(voter);
-            //}
-            col.Update(routeHolder);
+            }
+            users.Update(routeHolder);
         }
 
+        public void logException(Exception ex)
+        {
+            var col = db.GetCollection<ExceptionLog>("log");
+            ExceptionLog exceptionLog = new ExceptionLog
+            {
+                stackTrace = ex.StackTrace
+            };
+            col.Insert(exceptionLog);
+        }
     }
 }
