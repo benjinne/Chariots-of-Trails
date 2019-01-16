@@ -3,15 +3,15 @@ TODO:
 Display:
 	
 	display user profile in my-routes (pic/name)
-	who suggested the route
+	DONE: who suggested the route
 	Login changes to Logout once logged in
 	show current page in mobile view
 	show users how to add their own routes
 	show upcoming routes without ability to vote when not logged in
 	on login page explain to user that strava is purely used for authentication and they don't need to use strava. Also it's used for easily creating routes. (on desktop)
-	display more route details
+	DONE: display more route details
 	make better favicon and do this - https://andrewlock.net/adding-favicons-to-your-asp-net-core-website-with-realfavicongenerator/
-	display something when no map routes exist
+	display something when no map routes exist on either upcomming or my-routes
 	Figure out what to do with multiple days, and different groups on the same day
 	use dynamic css instead of updating in javascript on expanding navbar in mobile, and re-naming carousel routes to main-view-list
 		https://www.youtube.com/watch?v=4Gh5YcvGDjI&t=417s

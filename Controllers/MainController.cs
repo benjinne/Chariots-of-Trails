@@ -12,6 +12,7 @@ using System;
 namespace Chariots_of_Trails.Controllers
 {
     [LoginCheckFilter]
+    [ExceptionFilter]
     [Route("api/[controller]")]
     public class MainController : Controller
     {
