@@ -11,7 +11,8 @@ namespace Chariots_of_Trails.Providers
         void updateUser(User user);
         void suggestRouteByRouteId(string id);
         IEnumerator<Route> getSuggestedRoutes();
-        User getUserById(string token);
+        User getUserById(string userId);
+        Athlete getAthleteById(string athleteId);
         void voteByRouteIdAndUserId(string routeId, string userId);
         void logException(Exception ex);
     }
