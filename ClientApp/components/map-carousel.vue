@@ -8,6 +8,14 @@
                     <l-tile-layer :url="url" :attribution="attribution"/>
                 </l-map>
                 <div>{{route.description}}</div>
+                <div style="font-size:small">
+                    <div style="float:right;">
+                        Elevation: {{route.elevationFt}} ft
+                    </div>
+                    <div style="text-align: left">
+                        Distance: {{route.miles}} miles
+                    </div>
+                </div>
                 <slot v-bind:route="route"/>
             </div>
         </slide>

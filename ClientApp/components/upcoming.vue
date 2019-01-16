@@ -3,19 +3,11 @@
         <Loading :loading="mapsLoading" :size="50"/>
         <map-carousel :routes="routes">
             <template slot="votes" slot-scope="slotProps">
-                <h6>
+                <h6 style="color: red">
                     {{slotProps.votes}} votes
                 </h6>
             </template>
             <template slot-scope="slotProps">
-                <div style="font-size:small">
-                    <div style="float:right;">
-                        Elevation: {{slotProps.route.elevationFt}} ft
-                    </div>
-                    <div style="text-align: left">
-                        Distance: {{slotProps.route.miles}} miles
-                    </div>
-                </div>
                 <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>
                 <img class="avatar" v-for="(athlete, index) in slotProps.route.votedBy" :key="index" :src="athlete.profile" :title="athlete.fullname"/>
             </template>
