@@ -3,7 +3,7 @@
         <slide v-for="route in routes" :key="route.id">
             <div class="map-wrapper">
                 <h2>{{route.name}}</h2>
-                <slot name="votes" v-bind:votes="route.votedBy.length"/>
+                <slot name="top" v-bind:route="route"/>
                 <l-map class="map" ref="map" @leaflet:load="insertPolyline(route.map.summary_polyline)">
                     <l-tile-layer :url="url" :attribution="attribution"/>
                 </l-map>

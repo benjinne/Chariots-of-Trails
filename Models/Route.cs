@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LiteDB;
 
 namespace Chariots_of_Trails.Models
 {
@@ -15,7 +16,10 @@ namespace Chariots_of_Trails.Models
         public string name  { get; set; }
         public string estimated_moving_time { get; set; }
         public bool suggested { get; set; }
+        [BsonRef("athletes")]
         public List<Athlete> votedBy { get; set; } = new List<Athlete>();
+        [BsonRef("athletes")]
+        public Athlete suggestedBy { get; set; }
     }
 
     public class Map

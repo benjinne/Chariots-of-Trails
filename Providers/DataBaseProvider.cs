@@ -67,18 +67,21 @@ namespace Chariots_of_Trails.Providers
             return athlete;
         }
 
-        public void suggestRouteByRouteId(string routeId)
+        public void suggestRouteByRouteIdAndUserId(string routeId, string UserId)
         {
             var routes = db.GetCollection<Route>("routes");
             var route = routes.FindOne(Query.EQ("_id", routeId));
             route.suggested = true;
+            route.suggestedBy = getAthleteById(UserId);
             routes.Update(route);
         }
 
         public IEnumerator<Route> getSuggestedRoutes()
         {
             var routes = db.GetCollection<Route>("routes");
-            IEnumerator<Route> suggestedRoutes = routes.Find(Query.EQ("suggested", true)).GetEnumerator();
+            IEnumerator<Route> suggestedRoutes = routes.Include(x => x.votedBy)
+                                                       .Include(x => x.suggestedBy)
+                                                       .Find(Query.EQ("suggested", true)).GetEnumerator();
             return(suggestedRoutes);
         }
 

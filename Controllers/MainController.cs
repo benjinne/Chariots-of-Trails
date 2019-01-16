@@ -27,7 +27,8 @@ namespace Chariots_of_Trails.Controllers
         [HttpPost("[action]")]
         public IActionResult suggestRoute([FromQuery(Name = "routeId")] string routeId)
         {
-            dataBaseProvider.suggestRouteByRouteId(routeId);
+            string userId = HttpContext.Session.GetString("user_id");
+            dataBaseProvider.suggestRouteByRouteIdAndUserId(routeId, userId);
             return Ok();
         }
 

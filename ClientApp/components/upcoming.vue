@@ -2,10 +2,13 @@
     <div>
         <Loading :loading="mapsLoading" :size="50"/>
         <map-carousel :routes="routes">
-            <template slot="votes" slot-scope="slotProps">
+            <template slot="top" slot-scope="slotProps">
                 <h6 style="color: red">
-                    {{slotProps.votes}} votes
+                    {{slotProps.route.votedBy.length}} votes
                 </h6>
+                <h6>
+                    Suggested By: {{slotProps.route.suggestedBy.fullname}}
+                </h6>     
             </template>
             <template slot-scope="slotProps">
                 <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>

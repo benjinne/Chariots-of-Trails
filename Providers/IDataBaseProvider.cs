@@ -9,7 +9,7 @@ namespace Chariots_of_Trails.Providers
         bool userExists(User user); 
         void insertUser(User user);
         void updateUser(User user);
-        void suggestRouteByRouteId(string id);
+        void suggestRouteByRouteIdAndUserId(string id, string UserId);
         IEnumerator<Route> getSuggestedRoutes();
         User getUserById(string userId);
         Athlete getAthleteById(string athleteId);
