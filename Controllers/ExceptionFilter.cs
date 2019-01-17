@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Chariots_of_Trails.Controllers
 {
     //todo redirect to error page
-    //copied from here: https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-2.2#exception-filters
+    //learn more here: https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-2.2#exception-filters
+    // and here: https://stackoverflow.com/questions/36109052/inject-service-into-action-filter/36109690
     /// <summary>
     /// this is used to catch all exceptions, redirect to login and log the error in the database
     /// </summary>
