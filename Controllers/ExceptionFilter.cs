@@ -1,3 +1,4 @@
+using Chariots_of_Trails.Providers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -10,15 +11,21 @@ namespace Chariots_of_Trails.Controllers
     /// </summary>
     public class ExceptionFilter : ExceptionFilterAttribute
     {
+        private readonly IDataBaseProvider dataBaseProvider;
+
+        public ExceptionFilter(IDataBaseProvider dataBaseProvider)
+        {
+            this.dataBaseProvider = dataBaseProvider;
+        }
         public override void OnException(ExceptionContext filterContext)
         {
             if (!filterContext.ExceptionHandled)   
             {
-                filterContext.ExceptionHandled = true;
                 JsonResult result = new JsonResult(new { error = "an error has occured", location = "login" });
                 result.StatusCode = 403;
                 filterContext.Result = result;
-                //todo log error
+                filterContext.ExceptionHandled = true;
+                dataBaseProvider.logException(filterContext.Exception);
                 return;
             }  
         }

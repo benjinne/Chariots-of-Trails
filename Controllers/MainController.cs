@@ -12,7 +12,7 @@ using System;
 namespace Chariots_of_Trails.Controllers
 {
     [LoginCheckFilter]
-    [ExceptionFilter]
+    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("api/[controller]")]
     public class MainController : Controller
     {
@@ -100,6 +100,8 @@ namespace Chariots_of_Trails.Controllers
             }
             catch (Exception ex)
             {
+                //exception is handled here because this is a request made by the browser and redirecting can be done here,
+                //however all other calls are made by axios where redirecting is handled in ExceptionFilter
                 dataBaseProvider.logException(ex);
                 return Redirect("/login");
             }

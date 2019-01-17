@@ -15,6 +15,7 @@ axios.interceptors.response.use((response) => {
   return response
 }, (error) => {
   if (error.response && error.response.data && error.response.data.location) {
+    console.log(error.response.data.error)
     window.location = error.response.data.location
   } else {
     return Promise.reject(error)
