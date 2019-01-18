@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Chariots_of_Trails.Models;
+using System;
 
 namespace Chariots_of_Trails.Controllers
 {
+    [LoginCheckFilter]
+    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("api/[controller]")]
     public class MainController : Controller
     {
@@ -25,7 +28,8 @@ namespace Chariots_of_Trails.Controllers
         [HttpPost("[action]")]
         public IActionResult suggestRoute([FromQuery(Name = "routeId")] string routeId)
         {
-            dataBaseProvider.suggestRouteByRouteId(routeId);
+            string userId = HttpContext.Session.GetString("user_id");
+            dataBaseProvider.suggestRouteByRouteIdAndUserId(routeId, userId);
             return Ok();
         }
 
@@ -67,28 +71,40 @@ namespace Chariots_of_Trails.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> login([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
+        public IActionResult login()
+        {
+            return Ok(stravaProvider.login(Request.Host.ToString()));
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> receiveRedirect([FromQuery(Name = "state")] string state, [FromQuery(Name = "code")] string inCode, [FromQuery(Name = "scope")] string scope)
         {
             //todo check on each strava api call if users access token has expired and if so refresh it
             //todo if user has token that's not expired, don't try to get a new one
-            User user = await stravaProvider.getUser(state, inCode, scope);
-            if(dataBaseProvider.userExists(user))
+            try
             {
-                //add existing routes from database to user before updating user in database to prevent deleting routes
-                User savedUser = dataBaseProvider.getUserById(user.id);
-                if(savedUser.routes != null)
+                User user = await stravaProvider.getUser(state, inCode, scope);
+                if(dataBaseProvider.userExists(user))
                 {
-                    user.routes = savedUser.routes;
+                    //add existing routes from database to user before updating user in database to prevent deleting routes
+                    user.routes = dataBaseProvider.getUserById(user.id).routes;
+                    dataBaseProvider.updateUser(user);
                 }
-                dataBaseProvider.updateUser(user);
+                else
+                {
+                    dataBaseProvider.insertUser(user);
+                }
+                HttpContext.Session.SetString("access_token", user.access_token);
+                HttpContext.Session.SetString("user_id", user.id);
+                return Redirect("/");
             }
-            else
+            catch (Exception ex)
             {
-                dataBaseProvider.insertUser(user);
+                //exception is handled here because this is a request made by the browser and redirecting can be done here,
+                //however all other calls are made by axios where redirecting is handled in ExceptionFilter
+                dataBaseProvider.logException(ex);
+                return Redirect("/login");
             }
-            HttpContext.Session.SetString("access_token", user.access_token);
-            HttpContext.Session.SetString("user_id", user.id);
-            return Redirect("/");
         }
     }
 }

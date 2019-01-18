@@ -2,13 +2,17 @@
     <div>
         <Loading :loading="mapsLoading" :size="50"/>
         <map-carousel :routes="routes">
+            <template slot="top" slot-scope="slotProps">
+                <h6 style="color: red">
+                    {{slotProps.route.votedBy.length}} votes
+                </h6>
+                <h6>
+                    Suggested By: {{slotProps.route.suggestedBy.fullname}}
+                </h6>     
+            </template>
             <template slot-scope="slotProps">
-                <div style="float:left">
-                    <img class="avatar" v-for="athlete in slotProps.route.votedBy" :key="athlete.id" :src="athlete.profile"/>
-                    {{slotProps.route.votedBy == null ? 0 : slotProps.route.votedBy.length}} votes
-                </div>
                 <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>
-
+                <img class="avatar" v-for="(athlete, index) in slotProps.route.votedBy" :key="index" :src="athlete.profile" :title="athlete.fullname"/>
             </template>
         </map-carousel>
     </div>
@@ -34,13 +38,17 @@ export default {
     },
 
     methods: {
-        vote: async function(route) {
+        async vote(route) {
             await this.$http.post(`/api/main/vote?routeId=${route.id}`)
             await this.updateSuggestedRoutes();
         },
-        updateSuggestedRoutes: async function() {
+        async updateSuggestedRoutes() {
             let response = await this.$http.get(`/api/main/suggestedRoutes`)
+            response.data.sort(this.sortRoutes)
             this.routes = response.data
+        },
+        sortRoutes(routeA, routeB){
+            return routeB.votedBy.length - routeA.votedBy.length
         }
     }
 }
