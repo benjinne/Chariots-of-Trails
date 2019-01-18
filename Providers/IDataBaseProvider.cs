@@ -13,7 +13,8 @@ namespace Chariots_of_Trails.Providers
         IEnumerator<Route> getSuggestedRoutes();
         User getUserById(string userId);
         Athlete getAthleteById(string athleteId);
-        void voteByRouteIdAndUserId(string routeId, string userId);
+        void upVoteByRouteIdAndUserId(string routeId, string userId);
+        void downVoteByRouteIdAndUserId(string routeId, string userId);
         void logException(Exception ex);
     }
 }

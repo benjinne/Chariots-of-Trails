@@ -85,8 +85,12 @@ namespace Chariots_of_Trails.Providers
             return(suggestedRoutes);
         }
 
-        //only allows the voter to vote once
-        public void voteByRouteIdAndUserId(string routeId, string userId)
+        /// <summary>
+        /// only allows the voter to vote once
+        /// </summary>
+        /// <param name="routeId">strava's routeId</param>
+        /// <param name="userId">strava's userId or athleteId</param>
+        public void upVoteByRouteIdAndUserId(string routeId, string userId)
         {
             var routes = db.GetCollection<Route>("routes");
             Route votedRoute = routes.FindOne(Query.EQ("_id", routeId));
@@ -94,6 +98,24 @@ namespace Chariots_of_Trails.Providers
             if(!votedRoute.votedBy.Exists(x => x.id == userId))
             {
                 votedRoute.votedBy.Add(getAthleteById(userId));
+            }
+            routes.Update(votedRoute);
+        }
+
+        /// <summary>
+        /// only allows the voter to downvote if they already voted
+        /// </summary>
+        /// <param name="routeId">strava's routeId</param>
+        /// <param name="userId">strava's userId or athleteId</param>
+        public void downVoteByRouteIdAndUserId(string routeId, string userId)
+        {
+            var routes = db.GetCollection<Route>("routes");
+            Route votedRoute = routes.Include(x => x.votedBy)
+                                     .FindOne(Query.EQ("_id", routeId));
+            //this prevents a user from downvoting twice
+            if(votedRoute.votedBy.Exists(x => x.id == userId))
+            {
+                votedRoute.votedBy.Remove(votedRoute.votedBy.Find(x => x.id == userId));
             }
             routes.Update(votedRoute);
         }
