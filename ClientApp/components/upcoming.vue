@@ -11,7 +11,8 @@
                 </h6>     
             </template>
             <template slot-scope="slotProps">
-                <button v-on:click="vote(slotProps.route)" style="float:right">+1</button>
+                <button v-on:click="downVote(slotProps.route)" style="float:right">-1</button>
+                <button v-on:click="upVote(slotProps.route)" style="float:right">+1</button>
                 <img class="avatar" v-for="(athlete, index) in slotProps.route.votedBy" :key="index" :src="athlete.profile" :title="athlete.fullname"/>
             </template>
         </map-carousel>
@@ -38,8 +39,12 @@ export default {
     },
 
     methods: {
-        async vote(route) {
-            await this.$http.post(`/api/main/vote?routeId=${route.id}`)
+        async upVote(route) {
+            await this.$http.post(`/api/main/upVote?routeId=${route.id}`)
+            await this.updateSuggestedRoutes();
+        },
+        async downVote(route) {
+            await this.$http.post(`/api/main/downVote?routeId=${route.id}`)
             await this.updateSuggestedRoutes();
         },
         async updateSuggestedRoutes() {

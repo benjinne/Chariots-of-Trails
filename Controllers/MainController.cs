@@ -34,13 +34,20 @@ namespace Chariots_of_Trails.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult vote([FromQuery(Name = "routeId")] string routeId)
+        public IActionResult upVote([FromQuery(Name = "routeId")] string routeId)
         {
             string userId = HttpContext.Session.GetString("user_id");
-            dataBaseProvider.voteByRouteIdAndUserId(routeId, userId);
+            dataBaseProvider.upVoteByRouteIdAndUserId(routeId, userId);
             return Ok();
         }
-
+        
+        [HttpPost("[action]")]
+        public IActionResult downVote([FromQuery(Name = "routeId")] string routeId)
+        {
+            string userId = HttpContext.Session.GetString("user_id");
+            dataBaseProvider.downVoteByRouteIdAndUserId(routeId, userId);
+            return Ok();
+        }
         [HttpGet("[action]")]
         public async Task<IActionResult> updateUserRoutes()
         {
