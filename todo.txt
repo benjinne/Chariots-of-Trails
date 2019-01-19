@@ -55,7 +55,7 @@ Functionality:
 
 	implement logout
 	
-	modify vue and aspnet to run in production
+	DONE: modify vue and aspnet to run in production
 		then create a docker image and host on unraid server
 		
 	use webhooks to automatically update a users route maps? http://developers.strava.com/docs/webhooks/

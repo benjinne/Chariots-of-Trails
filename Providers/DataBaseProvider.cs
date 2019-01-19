@@ -125,7 +125,7 @@ namespace Chariots_of_Trails.Providers
             var col = db.GetCollection<ExceptionLog>("log");
             ExceptionLog exceptionLog = new ExceptionLog
             {
-                stackTrace = ex.StackTrace
+                stackTrace = $"{ex.Message}\n{ex.StackTrace}"
             };
             col.Insert(exceptionLog);
         }
