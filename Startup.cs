@@ -30,7 +30,7 @@ namespace Chariots_of_Trails
             });
 
             // Add framework services.
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Simple example with dependency injection for a data provider.
             services.AddSingleton<Providers.IStravaProvider, Providers.StravaProvider>();
