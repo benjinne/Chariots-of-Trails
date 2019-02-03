@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="text-align: center">
         <a href="#" @click="loginInit()">
             <svg width="193px" height="48px" viewBox="0 0 193 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>click here to login</title>
@@ -11,7 +11,11 @@
                     </g>
                 </g>
             </svg>
-        </a>      
+        </a>
+        <div style="padding-top: 50px; max-width: 500px">
+            Login with Strava for authentication. This allows you to suggest routes you created on strava.com!
+            If you don't have Strava, no problem! Use the connect with Strava button and choose login with Facebook or Google.
+        </div>
     </div>
 </template>
 
