@@ -2,44 +2,48 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Chariots_of_Trails.Models;
-using LiteDB;
+using MongoDB.Driver;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Chariots_of_Trails.Providers
 {
     public class DataBaseProvider : IDataBaseProvider
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
-        private LiteDatabase db;
-        public DataBaseProvider(IHostingEnvironment hostingEnvironment)
+        private readonly IMongoCollection<User> users;
+        private readonly IMongoCollection<Athlete> athletes;
+        private readonly IMongoCollection<Route> routes;
+        private readonly IMongoCollection<Map> maps;
+
+        public DataBaseProvider(IConfiguration config)
         {
-            _hostingEnvironment = hostingEnvironment;
-            db = new LiteDatabase("Data.db");
+            var client = new MongoClient(config.GetConnectionString("ycproutes"));
+            var database = client.GetDatabase("ycproutes");
+            users = database.GetCollection<User>("Users");
+            athletes = database.GetCollection<Athlete>("Athletes");
+            routes = database.GetCollection<Route>("Routes");
+            maps = database.GetCollection<Map>("Maps");
         }
+
         public bool userExists(User user)
         {
-            var users = db.GetCollection<User>("users");
-            return(users.Exists(Query.EQ("_id", user.id)));
+            return users.Find(test => test.id == user.id).CountDocuments() >= 1;
         }
+        
         public bool routeExists(Route route)
         {
-            var routes = db.GetCollection<Route>("routes");
-            return(routes.Exists(Query.EQ("_id", route.id)));
+            return routes.Find(test => test.id == route.id).CountDocuments() >= 1;
         }
 
         public void insertUser(User user)
         {
-            var users = db.GetCollection<User>("users");
-            var athletes = db.GetCollection<Athlete>("athletes");
-            users.Insert(user);
-            athletes.Insert(user.athlete);
+            users.InsertOne(user);
+            athletes.InsertOne(user.athlete);
         }
 
         public void updateUser(User user)
         {
-            var users = db.GetCollection<User>("users");
-            var routes = db.GetCollection<Route>("routes");
-            users.Update(user);
+            users.ReplaceOne(test => test.id == user.id, user);
             foreach(Route route in user.routes)
             {
                 if(routeExists(route))
@@ -55,8 +59,7 @@ namespace Chariots_of_Trails.Providers
         public User getUserById(string userId)
         {
             var users = db.GetCollection<User>("users");
-            User user = users.Include(x => x.routes)
-                             .Include(x => x.athlete)
+            User user = users.IncludeAll()
                              .FindOne(Query.EQ("_id", userId));
             return user;
         }
@@ -79,8 +82,7 @@ namespace Chariots_of_Trails.Providers
         public IEnumerator<Route> getSuggestedRoutes()
         {
             var routes = db.GetCollection<Route>("routes");
-            IEnumerator<Route> suggestedRoutes = routes.Include(x => x.votedBy)
-                                                       .Include(x => x.suggestedBy)
+            IEnumerator<Route> suggestedRoutes = routes.IncludeAll()
                                                        .Find(Query.EQ("suggested", true)).GetEnumerator();
             return(suggestedRoutes);
         }
@@ -126,6 +128,16 @@ namespace Chariots_of_Trails.Providers
             ExceptionLog exceptionLog = new ExceptionLog
             {
                 stackTrace = $"{ex.Message}\n{ex.StackTrace}"
+            };
+            col.Insert(exceptionLog);
+        }
+
+        public void log(String message)
+        {
+            var col = db.GetCollection<ExceptionLog>("log");
+            ExceptionLog exceptionLog = new ExceptionLog
+            {
+                stackTrace = message
             };
             col.Insert(exceptionLog);
         }

@@ -52,7 +52,13 @@ namespace Chariots_of_Trails.Controllers
         public async Task<IActionResult> updateUserRoutes()
         {
             string userId = HttpContext.Session.GetString("user_id");
+            
             User user = dataBaseProvider.getUserById(userId);
+            Console.WriteLine($"SessionId {userId}");
+            Console.WriteLine($"updating {user}'s routes");
+            Console.WriteLine($"updating {user.id}'s routes");
+            Console.WriteLine($"updating {user.athlete}'s routes");
+            Console.WriteLine($"updating {user.athlete.fullname}'s routes");
             user.routes = await stravaProvider.getUserRoutes(user);
             dataBaseProvider.updateUser(user);
             return Ok(user.routes);
@@ -68,7 +74,13 @@ namespace Chariots_of_Trails.Controllers
         public IActionResult userRoutes()
         {
             string userId = HttpContext.Session.GetString("user_id");
-            return Ok(dataBaseProvider.getUserById(userId).routes);
+            User user = dataBaseProvider.getUserById(userId);
+            Console.WriteLine($"SessionId {userId}");
+            Console.WriteLine($"getting {user}'s routes");
+            Console.WriteLine($"getting {user.id}'s routes");
+            Console.WriteLine($"getting {user.athlete}'s routes");
+            Console.WriteLine($"getting {user.athlete.fullname}'s routes");
+            return Ok(user.routes);
         }
 
         [HttpGet("[action]")]

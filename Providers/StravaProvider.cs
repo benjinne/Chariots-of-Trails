@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Chariots_of_Trails.Models;
 using Microsoft.AspNetCore.Hosting;
-using LiteDB;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -57,7 +56,7 @@ namespace Chariots_of_Trails.Providers
 
         public async Task<List<Route>> getUserRoutes(User user)
         {
-            string id = user.athlete.id.ToString();
+            string id = user.id;
             string token = user.access_token;
             string toGet = $"https://www.strava.com/api/v3/athletes/{id}/routes?page=1&per_page=50&access_token={token}";
             var responseString = await client.GetStringAsync(toGet);
